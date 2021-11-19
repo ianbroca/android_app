@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AlmiShop</string>
+    <string name="title_shop">Tienda</string>
+    <string name="title_location">Localización</string>
+    <string name="title_gallery">Galería</string>
+    <string name="title_aboutus">Sobre nosotros</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_hint">Búsqueda…</string>
+
+    <string name="local_storage_key">LocalStorage</string>
+    <string name="id_user">id_user</string>
+</resources>
