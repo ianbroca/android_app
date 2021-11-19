@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragmentDialogLogReg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inicio de sesión"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnNavigateToLogin"
+        android:backgroundTint="@color/primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Iniciar sesión"
+        android:textSize="34sp" />
+    <Button
+        android:id="@+id/btnNavigateToRegister"
+        android:backgroundTint="@color/primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrarse"
+        android:textSize="34sp" />
+    <Button
+        android:id="@+id/btnCloseLogReg"
+        android:backgroundTint="@color/primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cerrar"
+        android:textSize="34sp" />
+</LinearLayout>
