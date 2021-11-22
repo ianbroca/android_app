@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.almishop.R;
 
 public class SearchBarFragment extends Fragment {
-    private ProfileDialogFragment dialog;
+    public ProfileDialogFragment dialog;
     Context context;
     ImageButton btnProfile;
 

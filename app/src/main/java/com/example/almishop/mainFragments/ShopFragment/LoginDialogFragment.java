@@ -12,16 +12,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.almishop.ListAdapter;
 import com.example.almishop.R;
+import com.example.almishop.io.ApiAdapter;
+import com.example.almishop.model.Login;
+import com.example.almishop.model.User;
 
-import java.util.ArrayList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginDialogFragment extends DialogFragment
 {
@@ -79,7 +82,6 @@ public class LoginDialogFragment extends DialogFragment
         localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
         localStorageEditor = localStorage.edit();
         view = inflater.inflate(R.layout.fragment_dialog_login, container, false);
-
         return view;
     }
 
@@ -105,7 +107,36 @@ public class LoginDialogFragment extends DialogFragment
             @Override
             public void onClick(View view)
             {
-                // LLAMADA LOGIN
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
+                Login data = new Login(email, password);
+                Call<User> call = ApiAdapter.getApiService().login(data);
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        try {
+                            if (response.isSuccessful())
+                            {
+                                User user = response.body();
+                                Log.d(TAG, "Login successful: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
+                                localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
+                                ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
+                                profileDialogFragment.dismiss();
+                                dismiss();
+                            } else
+                            {
+                                Log.d(TAG, "Login failed. Username: " + email + " Password: " + password);
+                            }
+                        } catch (Exception ex) {
+                            Log.d(TAG, "LOGIN ERROR");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+
+                    }
+                });
             }
         });
         super.onViewCreated(view, savedInstanceState);
