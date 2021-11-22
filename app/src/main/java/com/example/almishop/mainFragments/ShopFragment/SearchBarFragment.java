@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.almishop.R;
 
 public class SearchBarFragment extends Fragment {
+    public ProfileDialogFragment dialog;
     Context context;
     ImageButton btnProfile;
 
@@ -53,7 +54,8 @@ public class SearchBarFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-
+                dialog = new ProfileDialogFragment();
+                dialog.show(getActivity().getSupportFragmentManager(), "Profile");
             }
         });
     }

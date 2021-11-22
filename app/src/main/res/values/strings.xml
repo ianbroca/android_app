@@ -10,4 +10,7 @@
 
     <string name="local_storage_key">LocalStorage</string>
     <string name="id_user">id_user</string>
+
+    <string name="about_us_text">Nosotros en AlmiShop intentamos ofecer una experiencia de compra única, donde lo importante al final del día eres tú, nuestro cliente. \n \nSomos un pequeño equipo, por ahora, ¡e intentamos que vuestra experiencia sea siempre la mejor posible!.</string>
+    <string name="about_us_follow">¡Síguenos en redes!</string>
 </resources>

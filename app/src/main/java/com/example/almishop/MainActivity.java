@@ -24,7 +24,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     public final int SEARCH_BAR_HEIGHT = 200;
-    LinearLayout searchBar, content;
+    public LinearLayout searchBar, content;
     BottomNavigationView menu;
     ArrayList<Fragment> mainFragments;
     int selectedIndex = 0;
