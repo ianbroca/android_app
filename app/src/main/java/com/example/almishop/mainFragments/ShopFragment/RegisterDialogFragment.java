@@ -24,8 +24,8 @@ public class RegisterDialogFragment extends DialogFragment
     private SharedPreferences localStorage;
     private SharedPreferences.Editor localStorageEditor;
     private ImageView btnClose;
-    private EditText etEmail, etPassword;
-    private Button btnLogin;
+    private EditText etEmail, etPassword, etRepassword, etName, etSurname1, etSurname2;
+    private Button btnRegister;
 
     public RegisterDialogFragment()
     {
@@ -77,7 +77,12 @@ public class RegisterDialogFragment extends DialogFragment
         btnClose = view.findViewById(R.id.btnCloseRegister);
         etEmail = view.findViewById(R.id.etRegisterEmail);
         etPassword = view.findViewById(R.id.etRegisterPassword);
-        btnLogin = view.findViewById(R.id.btnRegister);
+        etRepassword = view.findViewById(R.id.etRegisterRepassword);
+        etName = view.findViewById(R.id.etRegisterName);
+        etSurname1 = view.findViewById(R.id.etRegisterSurname1);
+        etSurname2 = view.findViewById(R.id.etRegisterSurname2);
+        // FALTA LA FECHA DE NACIMIENTO, PERO NO SE HACE CON EDIT TEXT ////////////////////////////
+        btnRegister = view.findViewById(R.id.btnRegister);
 
         btnClose.setOnClickListener(new View.OnClickListener()
         {
@@ -88,12 +93,12 @@ public class RegisterDialogFragment extends DialogFragment
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener()
+        btnRegister.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                // LLAMADA LOGIN
+                // LLAMADA REGISTER
             }
         });
         super.onViewCreated(view, savedInstanceState);

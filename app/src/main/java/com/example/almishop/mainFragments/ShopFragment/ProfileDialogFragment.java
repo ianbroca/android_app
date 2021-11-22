@@ -26,6 +26,8 @@ import java.util.ArrayList;
 public class ProfileDialogFragment extends DialogFragment
 {
     private static String TAG = "ProfileDialogFragment";
+    private DialogFragment dialog;
+
     private SharedPreferences localStorage;
     private SharedPreferences.Editor localStorageEditor;
     private ListView listView;
@@ -126,9 +128,13 @@ public class ProfileDialogFragment extends DialogFragment
                     {
                         case 0: // Iniciar sesión
                             Log.d(TAG, "onItemClick: Navigate to login");
-                            localStorageEditor.putString(getString(R.string.id_user), "1").commit();
+                            dialog = new LoginDialogFragment();
+                            dialog.show(getActivity().getSupportFragmentManager(), "Login");
+                            //localStorageEditor.putString(getString(R.string.id_user), "1").commit();
                             break;
                         case 1: // Registrarse
+                            dialog = new RegisterDialogFragment();
+                            dialog.show(getActivity().getSupportFragmentManager(), "Register");
                             Log.d(TAG, "onItemClick: Navigate to register");
                             break;
                     }

@@ -38,6 +38,19 @@ public class LoginDialogFragment extends DialogFragment
     }
 
     @Override
+    public void onStart()
+    {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
+        }
+    }
+
+    @Override
     public void onDetach()
     {
         super.onDetach();
@@ -67,12 +80,6 @@ public class LoginDialogFragment extends DialogFragment
         localStorageEditor = localStorage.edit();
         view = inflater.inflate(R.layout.fragment_dialog_login, container, false);
 
-        if (localStorage.getString(getString(R.string.id_user), "") != "")
-        {
-        } else
-        {
-            dismiss();
-        }
         return view;
     }
 
