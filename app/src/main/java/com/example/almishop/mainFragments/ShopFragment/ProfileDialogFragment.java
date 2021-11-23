@@ -169,6 +169,8 @@ public class ProfileDialogFragment extends DialogFragment
                             break;
                         case 1: // Navegar a información personal
                             Log.d(TAG, "onItemClick: Navigate to personal info");
+                            activity.navigateTo(activity.changeProfileFragment);
+                            dismiss();
                             break;
                         case 2: // Cambiar foto de perfil
                             Log.d(TAG, "onItemClick: Navigate to change propile picture");

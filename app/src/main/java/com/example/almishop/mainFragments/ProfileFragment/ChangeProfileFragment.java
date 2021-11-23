@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.almishop.DatePickerFragment;
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
@@ -65,6 +66,35 @@ public class ChangeProfileFragment extends Fragment
         localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
+
+        int id = Integer.parseInt(localStorage.getString(getString(R.string.id_user), ""));
+        Call<User> call = ApiAdapter.getApiService().getUserById(id);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                try {
+                    if (response.isSuccessful())
+                    {
+                        User user = response.body();
+                        Log.d(TAG, "Obtenido usuario: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
+                        etName.setText(user.getName());
+                        etSurname1.setText(user.getSurname1());
+                        etSurname2.setText(user.getSurname2());
+                        etBirthdate.setText(user.getBirthdate());
+                    } else
+                    {
+                        Log.d(TAG, "No se puedo obtener el usuario con id: " + id);
+                    }
+                } catch (Exception ex) {
+                    Log.d(TAG, "ERROR AL OBTENER EL USUARIO");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
 
         btnClose = view.findViewById(R.id.btnCloseRegister);
         etName = view.findViewById(R.id.etRegisterName);
