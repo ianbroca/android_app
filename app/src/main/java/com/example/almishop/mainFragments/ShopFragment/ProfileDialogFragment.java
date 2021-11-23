@@ -71,6 +71,7 @@ public class ProfileDialogFragment extends DialogFragment
         ArrayList<String> listElements = new ArrayList<String>();
         if (localStorage.getString(getString(R.string.id_user), "") != "")
         {
+            listElements.add("Historial de compras");
             listElements.add("Editar información personal");
             listElements.add("Cambiar foto de perfil");
             listElements.add("Cambiar contraseña");
@@ -112,13 +113,16 @@ public class ProfileDialogFragment extends DialogFragment
                 {
                     switch (i)
                     {
-                        case 0: // Navegar a información personal
+                        case 0: // Navegar a historial de compras
+                            Log.d(TAG, "onItemClick: Navigate to buy history");
+                            break;
+                        case 1: // Navegar a información personal
                             Log.d(TAG, "onItemClick: Navigate to personal info");
                             break;
-                        case 1: // Cambiar foto de perfil
+                        case 2: // Cambiar foto de perfil
                             Log.d(TAG, "onItemClick: Navigate to change propile picture");
                             break;
-                        case 2: // Cambiar password
+                        case 3: // Cambiar password
                             Log.d(TAG, "onItemClick: Navigate to change password");
                             break;
                     }

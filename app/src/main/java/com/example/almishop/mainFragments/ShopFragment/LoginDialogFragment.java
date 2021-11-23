@@ -28,7 +28,7 @@ import retrofit2.Response;
 
 public class LoginDialogFragment extends DialogFragment
 {
-    private static String TAG = "ProfileDialogFragment";
+    private static String TAG = "LOGIN DIALOG";
     private SharedPreferences localStorage;
     private SharedPreferences.Editor localStorageEditor;
     private ImageView btnClose;
