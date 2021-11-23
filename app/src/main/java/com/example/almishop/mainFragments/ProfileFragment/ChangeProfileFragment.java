@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterFragment extends Fragment
+public class ChangeProfileFragment extends Fragment
 {
     private static String TAG = "REGISTER DIALOG";
     private SharedPreferences localStorage;
@@ -36,10 +36,10 @@ public class RegisterFragment extends Fragment
     private MainActivity activity;
     private Context context;
     private ImageView btnClose;
-    private EditText etEmail, etPassword, etRepassword, etName, etSurname1, etSurname2, etBirthdate;
+    private EditText etName, etSurname1, etSurname2, etBirthdate;
     private Button btnRegister;
 
-    public RegisterFragment() { super(); }
+    public ChangeProfileFragment() { super(); }
 
     @Override
     public void onAttach(Context context)
@@ -56,7 +56,7 @@ public class RegisterFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_register, null);
+        return inflater.inflate(R.layout.fragment_change_profile, null);
     }
 
     @Override
@@ -67,9 +67,6 @@ public class RegisterFragment extends Fragment
         activity = (MainActivity) getActivity();
 
         btnClose = view.findViewById(R.id.btnCloseRegister);
-        etEmail = view.findViewById(R.id.etRegisterEmail);
-        etPassword = view.findViewById(R.id.etRegisterPassword);
-        etRepassword = view.findViewById(R.id.etRegisterRepassword);
         etName = view.findViewById(R.id.etRegisterName);
         etSurname1 = view.findViewById(R.id.etRegisterSurname1);
         etSurname2 = view.findViewById(R.id.etRegisterSurname2);
@@ -126,50 +123,40 @@ public class RegisterFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                String email = etEmail.getText().toString();
-                String password = etPassword.getText().toString();
-                String repassword = etRepassword.getText().toString();
                 String name = etName.getText().toString();
                 String surname1 = etSurname1.getText().toString();
                 String surname2 = etSurname2.getText().toString();
                 String birthdate = etBirthdate.getText().toString();
-                Register data = new Register(email, password, name, surname1, surname2, birthdate);
+//                Register data = new Register(name, surname1, surname2, birthdate);
 
-                if (password.equals(repassword))
-                {
-                    Call<User> call = ApiAdapter.getApiService().register(data);
-                    call.enqueue(new Callback<User>() {
-                        @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
-                            try {
-                                if (response.isSuccessful())
-                                {
-                                    User user = response.body();
-                                    Log.d(TAG, "Register successful: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
-                                    localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
-                                    getActivity().getSupportFragmentManager().popBackStackImmediate();
-//                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
-//                                    profileDialogFragment.dismiss();
-//                                    dismiss();
-                                } else
-                                {
-                                    Log.d(TAG, "Register failed. Username: " + email + " Password: " + password);
-                                }
-                            } catch (Exception ex) {
-                                Log.d(TAG, "REGISTER ERROR");
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<User> call, Throwable t) {
-
-                        }
-                    });
-                } else
-                {
-                    Log.d(TAG, "onClick: Las contraseñas no coinciden");
-                    // DIALOGO DE ERROR PORQUE ERES GILIPOLLAS
-                }
+//                Call<User> call = ApiAdapter.getApiService().register(data);
+//                call.enqueue(new Callback<User>() {
+//                    @Override
+//                    public void onResponse(Call<User> call, Response<User> response) {
+//                        try {
+//                            if (response.isSuccessful())
+//                            {
+//                                User user = response.body();
+//                                Log.d(TAG, "Register successful: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
+//                                localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
+//                                getActivity().getSupportFragmentManager().popBackStackImmediate();
+////                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
+////                                    profileDialogFragment.dismiss();
+////                                    dismiss();
+//                            } else
+//                            {
+//                                Log.d(TAG, "Register failed. Username: " + email + " Password: " + password);
+//                            }
+//                        } catch (Exception ex) {
+//                            Log.d(TAG, "REGISTER ERROR");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<User> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
     }

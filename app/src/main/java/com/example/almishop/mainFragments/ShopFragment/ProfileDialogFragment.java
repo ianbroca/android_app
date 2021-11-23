@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.example.almishop.ListAdapter;
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
@@ -29,6 +30,8 @@ import com.example.almishop.model.User;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileDialogFragment extends DialogFragment
 {
@@ -41,6 +44,7 @@ public class ProfileDialogFragment extends DialogFragment
     private ListView listView;
     private ImageView btnClose;
     private TextView tvName = null, tvBirthdate = null;
+    private ImageView ivPfp = null;
     private Button btnLogout = null;
 
     public ProfileDialogFragment()
@@ -89,6 +93,7 @@ public class ProfileDialogFragment extends DialogFragment
             view = inflater.inflate(R.layout.fragment_dialog_profile, container, false);
             btnClose = view.findViewById(R.id.btnCloseProfile);
             btnLogout = view.findViewById(R.id.btnLogin);
+            ivPfp = view.findViewById(R.id.ivProfileImg);
             tvName = view.findViewById(R.id.tvProfileName);
             tvBirthdate = view.findViewById(R.id.tvProfileBirthdate);
         } else
@@ -108,9 +113,39 @@ public class ProfileDialogFragment extends DialogFragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
-        if (tvName != null)
+        if (ivPfp != null)
         {
-//            Call<User> call = ApiAdapter.getApiService().getUserById(LocalStorage);
+            int id = Integer.parseInt(localStorage.getString(getString(R.string.id_user), ""));
+            Call<User> call = ApiAdapter.getApiService().getUserById(id);
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    try {
+                        if (response.isSuccessful())
+                        {
+                            User user = response.body();
+                            Log.d(TAG, "Obtenido usuario: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
+                            Glide
+                                    .with(getContext())
+                                    .load(user.getPfp())
+                                    .centerCrop()
+                                    .into(ivPfp);
+                            tvName.setText(user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
+                            tvBirthdate.setText(user.getBirthdate());
+                        } else
+                        {
+                            Log.d(TAG, "No se puedo obtener el usuario con id: " + id);
+                        }
+                    } catch (Exception ex) {
+                        Log.d(TAG, "ERROR AL OBTENER EL USUARIO");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+
+                }
+            });
         }
         btnClose.setOnClickListener(new View.OnClickListener()
         {
