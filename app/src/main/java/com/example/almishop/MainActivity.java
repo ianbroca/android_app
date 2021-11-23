@@ -24,6 +24,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     public final int SEARCH_BAR_HEIGHT = 200;
+    public final int MENU_HEIGHT = 110;
     public LinearLayout searchBar, content;
     BottomNavigationView menu;
     ArrayList<Fragment> mainFragments;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragmentSearchBarView, new SearchBarFragment())
                 .commit();
         toggleSearchBar(true);
+        toggleMenu(true);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -67,28 +69,48 @@ public class MainActivity extends AppCompatActivity {
                 {
                     case "Localización":
                         selectedIndex = 1;
-                        toggleSearchBar(false);
+//                        toggleSearchBar(false);
                         break;
                     case "Galería":
                         selectedIndex = 2;
-                        toggleSearchBar(false);
+//                        toggleSearchBar(false);
                         break;
                     case "Sobre nosotros":
                         selectedIndex = 3;
-                        toggleSearchBar(false);
+//                        toggleSearchBar(false);
                         break;
                     default:
                         selectedIndex = 0;
-                        toggleSearchBar(true);
+//                        toggleSearchBar(true);
                         break;
                 }
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainerView, mainFragments.get(selectedIndex))
-                        .commit();
+                navigateTo(mainFragments.get(selectedIndex));
                 return false;
             }
         });
+    }
+
+    public void navigateTo(Fragment fragment)
+    {
+        if (mainFragments.contains(fragment))
+        {
+            toggleMenu(true);
+            if (fragment == mainFragments.get(0))
+            {
+                toggleSearchBar(true);
+            } else
+            {
+                toggleSearchBar(false);
+            }
+        } else
+        {
+            toggleMenu(false);
+            toggleSearchBar(false);
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainerView, fragment)
+                .commit();
     }
 
     private void toggleSearchBar(boolean value)
@@ -102,6 +124,21 @@ public class MainActivity extends AppCompatActivity {
         {
             params.height = 0;
             searchBar.setLayoutParams(params);
+        }
+    }
+
+    public void toggleMenu(boolean value)
+    {
+        LayoutParams params = menu.getLayoutParams();
+        Log.d("TAG", "toggleMenu: " + params.height);
+        if (value)
+        {
+            params.height = MENU_HEIGHT;
+            menu.setLayoutParams(params);
+        } else
+        {
+            params.height = 0;
+            menu.setLayoutParams(params);
         }
     }
 }
