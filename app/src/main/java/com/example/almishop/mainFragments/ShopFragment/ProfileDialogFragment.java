@@ -19,7 +19,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.almishop.ListAdapter;
+import com.example.almishop.MainActivity;
 import com.example.almishop.R;
+import com.example.almishop.mainFragments.ProfileFragment.RegisterFragment;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ public class ProfileDialogFragment extends DialogFragment
 {
     private static String TAG = "ProfileDialogFragment";
     private DialogFragment dialog;
+    private MainActivity activity;
 
     private SharedPreferences localStorage;
     private SharedPreferences.Editor localStorageEditor;
@@ -65,7 +68,8 @@ public class ProfileDialogFragment extends DialogFragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View view;
-        localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
+        activity = (MainActivity) getActivity();
+        localStorage = activity.getPreferences(Context.MODE_PRIVATE);
         localStorageEditor = localStorage.edit();
 
         ArrayList<String> listElements = new ArrayList<String>();
@@ -137,9 +141,11 @@ public class ProfileDialogFragment extends DialogFragment
                             //localStorageEditor.putString(getString(R.string.id_user), "1").commit();
                             break;
                         case 1: // Registrarse
-                            dialog = new RegisterDialogFragment();
-                            dialog.show(getActivity().getSupportFragmentManager(), "Register");
                             Log.d(TAG, "onItemClick: Navigate to register");
+                            activity.navigateTo(activity.registerFragment);
+                            dismiss();
+//                            dialog = new RegisterDialogFragment();
+//                            dialog.show(getActivity().getSupportFragmentManager(), "Register");
                             break;
                     }
                 }

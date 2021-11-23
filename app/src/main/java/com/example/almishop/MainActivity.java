@@ -14,6 +14,7 @@ import android.view.ViewGroup.LayoutParams;
 import com.example.almishop.mainFragments.AboutUsFragment;
 import com.example.almishop.mainFragments.GalleryFragment;
 import com.example.almishop.mainFragments.LocationFragment;
+import com.example.almishop.mainFragments.ProfileFragment.RegisterFragment;
 import com.example.almishop.mainFragments.ShopFragment.SearchBarFragment;
 import com.example.almishop.mainFragments.ShopFragment.ShopFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public final int MENU_HEIGHT = 110;
     public LinearLayout searchBar, content;
     BottomNavigationView menu;
-    ArrayList<Fragment> mainFragments;
+    public ArrayList<Fragment> mainFragments;
+    public RegisterFragment registerFragment;
     int selectedIndex = 0;
 
     @Override
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         setContentView(R.layout.activity_main);
+
+        registerFragment = new RegisterFragment();
 
         searchBar = findViewById(R.id.fragmentSearchBarView);
         content = findViewById(R.id.fragmentContainerView);
@@ -69,19 +73,15 @@ public class MainActivity extends AppCompatActivity {
                 {
                     case "Localización":
                         selectedIndex = 1;
-//                        toggleSearchBar(false);
                         break;
                     case "Galería":
                         selectedIndex = 2;
-//                        toggleSearchBar(false);
                         break;
                     case "Sobre nosotros":
                         selectedIndex = 3;
-//                        toggleSearchBar(false);
                         break;
                     default:
                         selectedIndex = 0;
-//                        toggleSearchBar(true);
                         break;
                 }
                 navigateTo(mainFragments.get(selectedIndex));
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         LayoutParams params = searchBar.getLayoutParams();
         if (value)
         {
-            params.height = SEARCH_BAR_HEIGHT;
+            params.height = params.WRAP_CONTENT;
             searchBar.setLayoutParams(params);
         } else
         {
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("TAG", "toggleMenu: " + params.height);
         if (value)
         {
-            params.height = MENU_HEIGHT;
+            params.height = params.WRAP_CONTENT;
             menu.setLayoutParams(params);
         } else
         {
