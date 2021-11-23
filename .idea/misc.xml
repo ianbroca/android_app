@@ -26,6 +26,8 @@
         <entry key="..\:/Users/pc/StudioProjects/AlmiShop/app/src/main/res/layout/fragment_shop.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/StudioProjects/AlmiShop/app/src/main/res/layout/fragment_shop_search_bar.xml" value="0.2741477272727273" />
         <entry key="..\:/Users/pc/StudioProjects/AlmiShop/app/src/main/res/menu/bottom_menu.xml" value="0.36666666666666664" />
+        <entry key="app/src/main/res/layout/fragment_location.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/location_view.xml" value="0.1757852077001013" />
       </map>
     </option>
   </component>
