@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    public final int SEARCH_BAR_HEIGHT = 200;
-    public final int MENU_HEIGHT = 110;
     public LinearLayout searchBar, content;
     BottomNavigationView menu;
     public ArrayList<Fragment> mainFragments;
