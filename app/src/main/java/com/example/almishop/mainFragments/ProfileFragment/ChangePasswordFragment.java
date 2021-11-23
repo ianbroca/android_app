@@ -25,6 +25,10 @@ import com.example.almishop.DatePickerFragment;
 import com.example.almishop.ListAdapter;
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
+import com.example.almishop.io.ApiAdapter;
+import com.example.almishop.model.User;
+
+import retrofit2.Call;
 
 public class ChangePasswordFragment extends DialogFragment {
 
@@ -33,6 +37,9 @@ public class ChangePasswordFragment extends DialogFragment {
     private SharedPreferences.Editor localStorageEditor;
     private MainActivity activity;
     private Context context;
+
+    private EditText etOldPassword, etNewPassword, etRepeatNewPassword;
+    private Button btnChangePassword;
 
     public ChangePasswordFragment() { super(); }
 
@@ -60,6 +67,31 @@ public class ChangePasswordFragment extends DialogFragment {
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
 
+        btnChangePassword = getView().findViewById(R.id.btnChangePassword);
+        etOldPassword = getView().findViewById(R.id.etOldPassword);
+        etNewPassword = getView().findViewById(R.id.etNewPassword);
+        etRepeatNewPassword = getView().findViewById(R.id.etRepeatNewPassword);
+
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String oldPassword = etOldPassword.getText().toString();
+                String newPassword = etNewPassword.getText().toString();
+                String repeatNewPassword = etRepeatNewPassword.getText().toString();
+
+                if (!oldPassword.equals(newPassword) && newPassword.equals(repeatNewPassword) && !newPassword.equals("")) {
+                    Log.d(TAG, "onClick: changePwd OK!");
+
+                    Call<User> call = ApiAdapter.getApiService().getUserById(localStorage.getString(getString(R.string.id_user), ""););
+                } else if (oldPassword.equals("") || newPassword.equals("") || repeatNewPassword.equals("")) {
+                    Log.d(TAG, "onClick: changePWD KO - empty fields");
+                } else if (oldPassword.equals(newPassword)) {
+                    Log.d(TAG, "onClick: changePWD KO - oldPwd = newPwd");
+                } else {
+                    Log.d(TAG, "onClick: changePWD KO - newPwd != repNewPwd");
+                }
+            }
+        });
     }
 
     @Override
