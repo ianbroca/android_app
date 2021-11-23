@@ -111,24 +111,24 @@ public class RegisterDialogFragment extends DialogFragment
                     @Override
                     public void onDateSet(DatePicker datePicker, int y, int m, int d)
                     {
-//                        m = m+1;
-//                        String year, month, day;
-//                        year = "" + y;
-//                        if (m < 10)
-//                        {
-//                            month = "0" + m;
-//                        } else
-//                        {
-//                            month = "" + m;
-//                        }
-//                        if (d < 10)
-//                        {
-//                            day = "0" + d;
-//                        } else
-//                        {
-//                            day = "" + d;
-//                        }
-                        final String selectedDate = y + "/" + m + "/" + d;
+                        m = m+1;
+                        String year, month, day;
+                        year = "" + y;
+                        if (m < 10)
+                        {
+                            month = "0" + m;
+                        } else
+                        {
+                            month = "" + m;
+                        }
+                        if (d < 10)
+                        {
+                            day = "0" + d;
+                        } else
+                        {
+                            day = "" + d;
+                        }
+                        final String selectedDate = year + "/" + month + "/" + day;
                         Log.d(TAG, "onDateSet: "+selectedDate);
                         etBirthdate.setText(selectedDate);
                     }
@@ -160,7 +160,7 @@ public class RegisterDialogFragment extends DialogFragment
                 String birthdate = etBirthdate.getText().toString();
                 Register data = new Register(email, password, name, surname1, surname2, birthdate);
 
-                if (password == repassword)
+                if (password.equals(repassword))
                 {
                     Call<User> call = ApiAdapter.getApiService().register(data);
                     call.enqueue(new Callback<User>() {
@@ -191,6 +191,7 @@ public class RegisterDialogFragment extends DialogFragment
                     });
                 } else
                 {
+                    Log.d(TAG, "onClick: Las contraseñas no coinciden");
                     // DIALOGO DE ERROR PORQUE ERES GILIPOLLAS
                 }
             }
