@@ -128,6 +128,8 @@ public class ProfileDialogFragment extends DialogFragment
                             break;
                         case 3: // Cambiar password
                             Log.d(TAG, "onItemClick: Navigate to change password");
+                            activity.navigateTo(activity.changePasswordFragment);
+                            dismiss();
                             break;
                     }
                 } else

@@ -14,6 +14,7 @@ import android.view.ViewGroup.LayoutParams;
 import com.example.almishop.mainFragments.AboutUsFragment;
 import com.example.almishop.mainFragments.GalleryFragment;
 import com.example.almishop.mainFragments.LocationFragment;
+import com.example.almishop.mainFragments.ProfileFragment.ChangePasswordFragment;
 import com.example.almishop.mainFragments.ProfileFragment.RegisterFragment;
 import com.example.almishop.mainFragments.ShopFragment.SearchBarFragment;
 import com.example.almishop.mainFragments.ShopFragment.ShopFragment;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView menu;
     public ArrayList<Fragment> mainFragments;
     public RegisterFragment registerFragment;
+    public ChangePasswordFragment changePasswordFragment;
     int selectedIndex = 0;
 
     @Override
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         registerFragment = new RegisterFragment();
+        changePasswordFragment = new ChangePasswordFragment();
 
         searchBar = findViewById(R.id.fragmentSearchBarView);
         content = findViewById(R.id.fragmentContainerView);
