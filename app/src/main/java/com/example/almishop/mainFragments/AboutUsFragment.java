@@ -1,7 +1,5 @@
 package com.example.almishop.mainFragments;
 
-import static android.text.Layout.JUSTIFICATION_MODE_INTER_WORD;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.almishop.AboutUsGridAdapter;
 import com.example.almishop.R;
-import com.example.almishop.Us;
+import com.example.almishop.model.Us;
 
 import java.util.ArrayList;
 
