@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/btnCloseRegister"
+        android:id="@+id/btnCloseProfile"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/ic_arrow_back_outline" />
 
     <TextView
-        android:id="@+id/tvRegisterTitle"
+        android:id="@+id/tvProfileTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -28,7 +28,7 @@
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnCloseRegister"
+        app:layout_constraintStart_toEndOf="@+id/btnCloseProfile"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -39,14 +39,14 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRegisterTitle">
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileTitle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvRegisterName"
+                android:id="@+id/tvProfileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -54,7 +54,8 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -64,11 +65,11 @@
                 app:boxBackgroundColor="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvRegisterName"
+                app:layout_constraintStart_toEndOf="@+id/tvProfileName"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etRegisterName"
+                    android:id="@+id/etProfileName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -79,7 +80,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvRegisterSurname1"
+                android:id="@+id/tvProfileSurname1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -87,7 +88,8 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -97,11 +99,11 @@
                 app:boxBackgroundColor="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvRegisterSurname1"
+                app:layout_constraintStart_toEndOf="@+id/tvProfileSurname1"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etRegisterSurname1"
+                    android:id="@+id/etProfileSurname1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -112,7 +114,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvRegisterSurname2"
+                android:id="@+id/tvProfileSurname2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -120,7 +122,8 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -130,11 +133,11 @@
                 app:boxBackgroundColor="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvRegisterSurname2"
+                app:layout_constraintStart_toEndOf="@+id/tvProfileSurname2"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etRegisterSurname2"
+                    android:id="@+id/etProfileSurname2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -145,7 +148,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvRegisterBirthdate"
+                android:id="@+id/tvProfileBirthdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -153,7 +156,8 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -163,7 +167,7 @@
                 app:boxBackgroundColor="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvRegisterBirthdate"
+                app:layout_constraintStart_toEndOf="@+id/tvProfileBirthdate"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText

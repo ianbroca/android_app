@@ -22,6 +22,7 @@ import com.example.almishop.DatePickerFragment;
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
+import com.example.almishop.model.ChangeProfile;
 import com.example.almishop.model.Register;
 import com.example.almishop.model.User;
 
@@ -31,14 +32,14 @@ import retrofit2.Response;
 
 public class ChangeProfileFragment extends Fragment
 {
-    private static String TAG = "REGISTER DIALOG";
+    private static String TAG = "PROFILE DIALOG";
     private SharedPreferences localStorage;
     private SharedPreferences.Editor localStorageEditor;
     private MainActivity activity;
     private Context context;
     private ImageView btnClose;
     private EditText etName, etSurname1, etSurname2, etBirthdate;
-    private Button btnRegister;
+    private Button btnSaveChanges;
 
     public ChangeProfileFragment() { super(); }
 
@@ -80,7 +81,7 @@ public class ChangeProfileFragment extends Fragment
                         etName.setText(user.getName());
                         etSurname1.setText(user.getSurname1());
                         etSurname2.setText(user.getSurname2());
-                        etBirthdate.setText(user.getBirthdate());
+                        etBirthdate.setText(user.getBirthdate().replace('-', '/'));
                     } else
                     {
                         Log.d(TAG, "No se puedo obtener el usuario con id: " + id);
@@ -96,12 +97,12 @@ public class ChangeProfileFragment extends Fragment
             }
         });
 
-        btnClose = view.findViewById(R.id.btnCloseRegister);
-        etName = view.findViewById(R.id.etRegisterName);
-        etSurname1 = view.findViewById(R.id.etRegisterSurname1);
-        etSurname2 = view.findViewById(R.id.etRegisterSurname2);
-        etBirthdate = view.findViewById(R.id.etRegisterBirthdate);
-        btnRegister = view.findViewById(R.id.btnRegister);
+        btnClose = view.findViewById(R.id.btnCloseProfile);
+        etName = view.findViewById(R.id.etProfileName);
+        etSurname1 = view.findViewById(R.id.etProfileSurname1);
+        etSurname2 = view.findViewById(R.id.etProfileSurname2);
+        etBirthdate = view.findViewById(R.id.etProfileBirthdate);
+        btnSaveChanges = view.findViewById(R.id.btnChangeProfile);
 
         etBirthdate.setOnClickListener(new View.OnClickListener()
         {
@@ -148,7 +149,7 @@ public class ChangeProfileFragment extends Fragment
             }
         });
 
-        btnRegister.setOnClickListener(new View.OnClickListener()
+        btnSaveChanges.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -157,36 +158,37 @@ public class ChangeProfileFragment extends Fragment
                 String surname1 = etSurname1.getText().toString();
                 String surname2 = etSurname2.getText().toString();
                 String birthdate = etBirthdate.getText().toString();
-//                Register data = new Register(name, surname1, surname2, birthdate);
+                ChangeProfile data = new ChangeProfile(id, name, surname1, surname2, birthdate);
 
-//                Call<User> call = ApiAdapter.getApiService().register(data);
-//                call.enqueue(new Callback<User>() {
-//                    @Override
-//                    public void onResponse(Call<User> call, Response<User> response) {
-//                        try {
-//                            if (response.isSuccessful())
-//                            {
-//                                User user = response.body();
-//                                Log.d(TAG, "Register successful: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
-//                                localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
-//                                getActivity().getSupportFragmentManager().popBackStackImmediate();
-////                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
-////                                    profileDialogFragment.dismiss();
-////                                    dismiss();
-//                            } else
-//                            {
-//                                Log.d(TAG, "Register failed. Username: " + email + " Password: " + password);
-//                            }
-//                        } catch (Exception ex) {
-//                            Log.d(TAG, "REGISTER ERROR");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<User> call, Throwable t) {
-//
-//                    }
-//                });
+                Log.d(TAG, "DATA: " + name + " " + surname1 + " " + surname2 + " " + birthdate);
+                Call<User> call = ApiAdapter.getApiService().changeProfile(data);
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        try {
+                            if (response.isSuccessful())
+                            {
+                                User user = response.body();
+                                Log.d(TAG, "Profile updated: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2() + " " + user.getBirthdate());
+                                localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
+                                getActivity().getSupportFragmentManager().popBackStackImmediate();
+//                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
+//                                    profileDialogFragment.dismiss();
+//                                    dismiss();
+                            } else
+                            {
+                                Log.d(TAG, "Error al guardar los cambios.");
+                            }
+                        } catch (Exception ex) {
+                            Log.d(TAG, "PROFILE ERROR");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+
+                    }
+                });
             }
         });
     }

@@ -5,8 +5,8 @@ public class ChangePassword
     private int id;
     private String password;
 
-    public ChangePassword(String password)
-    {
+    public ChangePassword(int id, String password) {
+        this.id = id;
         this.password = password;
     }
 
