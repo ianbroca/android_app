@@ -118,11 +118,17 @@ public class LoginDialogFragment extends DialogFragment
                             if (response.isSuccessful())
                             {
                                 User user = response.body();
-                                Log.d(TAG, "Login successful: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
-                                localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
-                                ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
-                                profileDialogFragment.dismiss();
-                                dismiss();
+                                if (user.getId() != 0)
+                                {
+                                    Log.d(TAG, "Login successful: " + user.getId() + " " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
+                                    localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
+                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
+                                    profileDialogFragment.dismiss();
+                                    dismiss();
+                                } else
+                                {
+                                    Log.d(TAG, "El corre y contraseña introducidos no coinciden.");
+                                }
                             } else
                             {
                                 Log.d(TAG, "Login failed. Username: " + email + " Password: " + password);

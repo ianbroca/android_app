@@ -128,7 +128,7 @@ public class ShopFragment extends Fragment
                         break;
                     case 1:
 
-                        
+
                         Call<Product[]> call1 = ApiAdapter.getApiService().getVideogames();
 
                         call1.enqueue(new Callback<Product[]>()
