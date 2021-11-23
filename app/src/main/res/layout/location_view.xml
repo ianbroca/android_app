@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,21 +12,59 @@
         android:gravity="center"
         android:layout_weight="1"
         android:text="Encuentra Almishop!"
+        android:justificationMode="inter_word"
         android:textSize="30sp"
         android:textStyle="bold" />
+ <TextView
+     android:layout_width="match_parent"
+     android:layout_height="20dp"
+     android:gravity="left"
+     android:paddingLeft="40dp"
+     android:justificationMode="inter_word"
+     android:text="Avda Lehendakari Aguirre,29-1º (Deusto) 48014">
+
+ </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="left"
+        android:paddingLeft="40dp"
+        android:justificationMode="inter_word"
+        android:text="Teléfono: 94 410 38 37">
+
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="left"
+        android:paddingLeft="40dp"
+        android:justificationMode="inter_word"
+        android:text="Horario: 8:00 – 20:00 (LUNES A VIERNES)">
+
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="left"
+        android:paddingLeft="40dp"
+        android:justificationMode="inter_word"
+        android:text="Email:Almishop@gmail.com">
+
+    </TextView>
 
     <LinearLayout
     android:layout_width="match_parent"
+    android:paddingTop="10dp"
     android:layout_height="350dp"
     android:layout_gravity="center"
     android:layout_weight="2"
     >
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 </LinearLayout>
 
