@@ -1,5 +1,6 @@
 package com.example.almishop.mainFragments.ShopFragment;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -17,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.almishop.DatePickerFragment;
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.model.Register;
@@ -98,6 +101,42 @@ public class RegisterDialogFragment extends DialogFragment
         etBirthdate = view.findViewById(R.id.etRegisterBirthdate);
         btnRegister = view.findViewById(R.id.btnRegister);
 
+        etBirthdate.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener()
+                {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int y, int m, int d)
+                    {
+//                        m = m+1;
+//                        String year, month, day;
+//                        year = "" + y;
+//                        if (m < 10)
+//                        {
+//                            month = "0" + m;
+//                        } else
+//                        {
+//                            month = "" + m;
+//                        }
+//                        if (d < 10)
+//                        {
+//                            day = "0" + d;
+//                        } else
+//                        {
+//                            day = "" + d;
+//                        }
+                        final String selectedDate = y + "/" + m + "/" + d;
+                        Log.d(TAG, "onDateSet: "+selectedDate);
+                        etBirthdate.setText(selectedDate);
+                    }
+                });
+                newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+            }
+        });
+
         btnClose.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -118,7 +157,7 @@ public class RegisterDialogFragment extends DialogFragment
                 String name = etName.getText().toString();
                 String surname1 = etSurname1.getText().toString();
                 String surname2 = etSurname2.getText().toString();
-                String birthdate = etSurname2.getText().toString();
+                String birthdate = etBirthdate.getText().toString();
                 Register data = new Register(email, password, name, surname1, surname2, birthdate);
 
                 if (password == repassword)
