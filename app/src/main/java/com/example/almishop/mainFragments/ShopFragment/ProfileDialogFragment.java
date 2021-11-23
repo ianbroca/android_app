@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,9 +22,13 @@ import androidx.fragment.app.DialogFragment;
 import com.example.almishop.ListAdapter;
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
+import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.mainFragments.ProfileFragment.RegisterFragment;
+import com.example.almishop.model.User;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
 
 public class ProfileDialogFragment extends DialogFragment
 {
@@ -35,6 +40,7 @@ public class ProfileDialogFragment extends DialogFragment
     private SharedPreferences.Editor localStorageEditor;
     private ListView listView;
     private ImageView btnClose;
+    private TextView tvName = null, tvBirthdate = null;
     private Button btnLogout = null;
 
     public ProfileDialogFragment()
@@ -83,6 +89,8 @@ public class ProfileDialogFragment extends DialogFragment
             view = inflater.inflate(R.layout.fragment_dialog_profile, container, false);
             btnClose = view.findViewById(R.id.btnCloseProfile);
             btnLogout = view.findViewById(R.id.btnLogin);
+            tvName = view.findViewById(R.id.tvProfileName);
+            tvBirthdate = view.findViewById(R.id.tvProfileBirthdate);
         } else
         {
             listElements.add("Iniciar sesión");
@@ -100,6 +108,10 @@ public class ProfileDialogFragment extends DialogFragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
+        if (tvName != null)
+        {
+//            Call<User> call = ApiAdapter.getApiService().getUserById(LocalStorage);
+        }
         btnClose.setOnClickListener(new View.OnClickListener()
         {
             @Override
