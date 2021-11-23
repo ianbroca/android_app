@@ -5,8 +5,13 @@ import androidx.annotation.AnyRes;
 import com.example.almishop.model.ChangePassword;
 import com.example.almishop.model.Location;
 import com.example.almishop.model.Login;
+import com.example.almishop.model.Product;
 import com.example.almishop.model.Register;
+import com.example.almishop.model.Smartphone;
+import com.example.almishop.model.Tablet;
 import com.example.almishop.model.User;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,7 +20,8 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-public interface ApiService {
+public interface ApiService
+{
 //    @GET("courses")
 //    Call<ArrayList<Course>> getCourses();
 //
@@ -38,4 +44,18 @@ public interface ApiService {
 
     @PUT("user/edit")
     Call<User> changePassword(@Body ChangePassword data);
+
+    @GET("product/smartphones")
+    Call<Product[]> getSmartphones();
+
+    @GET("product/tablets")
+    Call<Product[]> getTablets();
+
+    @GET("product/consoles")
+    Call<Product[]> getConsoles();
+
+
+    @GET("product/videogames")
+    Call<Product[]> getVideogames();
+
 }

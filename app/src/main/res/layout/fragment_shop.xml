@@ -3,16 +3,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainFragments.ShopFragment.ShopFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".mainFragments.ShopFragment.ShopFragment"
+    android:orientation="vertical">
+
+   <!-- <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/top_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        app:menu="@menu/top_menu"
+        />-->
+
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tlProducts"
+        app:tabMode="scrollable"
+        android:isScrollContainer="true"
+        app:tabSelectedTextColor="@color/bottom_nav_color"
+        app:tabIndicatorColor="@color/bottom_nav_color" />
+    <TextView
+        android:id="@+id/tvCat1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:justificationMode="inter_word"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:paddingLeft="15dp"
+        >
+
+    </TextView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProducts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:orientation="horizontal"
-        tools:listitem="@layout/recycler_view_item">
-
+        tools:listitem="@layout/recycler_view_item"
+        android:paddingTop="5dp"
+        >
     </androidx.recyclerview.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/tvCat2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:justificationMode="inter_word"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:paddingLeft="15dp"
+        >
+
+    </TextView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProducts2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        tools:listitem="@layout/recycler_view_item"
+        android:paddingTop="5dp"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

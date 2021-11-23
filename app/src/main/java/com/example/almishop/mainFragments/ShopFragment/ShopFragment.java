@@ -13,20 +13,38 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.almishop.R;
+import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.mainFragments.ShopFragment.adapters.RecyclerViewAdapter;
+import com.example.almishop.model.Console;
+import com.example.almishop.model.Product;
+import com.example.almishop.model.Smartphone;
+import com.example.almishop.model.Tablet;
+import com.example.almishop.model.User;
+import com.example.almishop.model.Videogame;
+import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ShopFragment extends Fragment
 {
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrls = new ArrayList<>();
 
     private static final String TAG = "shopFragment";
 
+    private TabLayout tabs = null;
     private Context context;
+    private TextView tvCategoria1 = null;
+    private TextView tvCategoria2 = null;
+    private ProgressBar pgsBar = null;
 
 
     public ShopFragment()
@@ -59,12 +77,25 @@ public class ShopFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "initRecyclerView: init recyclerview");
-        getImages();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = view.findViewById(R.id.rvProducts);
-        recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter( mNames,mImageUrls, context);
-        recyclerView.setAdapter(adapter);
+
+        tvCategoria1= view.findViewById(R.id.tvCat1);
+        tvCategoria1.setText("");
+        tvCategoria2= view.findViewById(R.id.tvCat2);
+        tvCategoria2.setText("");
+
+        tabs = view.findViewById(R.id.tlProducts);
+
+        pgsBar = (ProgressBar)view.findViewById(R.id.pBar);
+
+        tabs.addTab(tabs.newTab().setText("Top"));
+        tabs.addTab(tabs.newTab().setText("Videojuegos"));
+        tabs.addTab(tabs.newTab().setText("Smartphones"));
+        tabs.addTab(tabs.newTab().setText("Tablets"));
+        tabs.addTab(tabs.newTab().setText("Consolas"));
+
+        productsOntabSelected();
+
+
     }
 
     @Override
@@ -73,38 +104,204 @@ public class ShopFragment extends Fragment
         super.onDetach();
     }
 
-    private void getImages()
+    private void productsOntabSelected()
     {
-        Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
-        mImageUrls.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");
-        mNames.add("Havasu Falls");
 
-        mImageUrls.add("https://i.redd.it/tpsnoz5bzo501.jpg");
-        mNames.add("Trondheim");
-
-        mImageUrls.add("https://i.redd.it/qn7f9oqu7o501.jpg");
-        mNames.add("Portugal");
-
-        mImageUrls.add("https://i.redd.it/j6myfqglup501.jpg");
-        mNames.add("Rocky Mountain National Park");
-
-
-        mImageUrls.add("https://i.redd.it/0h2gm1ix6p501.jpg");
-        mNames.add("Mahahual");
-
-        mImageUrls.add("https://i.redd.it/k98uzl68eh501.jpg");
-        mNames.add("Frozen Lake");
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
+        {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab)
+            {
+                Log.d(TAG, "onTabSelected: " + tabs.getSelectedTabPosition());
+                switch (tab.parent.getSelectedTabPosition())
+                {
+                    case 0:
+                        tvCategoria1.setText("");
+                        tvCategoria2.setText("");
 
 
-        mImageUrls.add("https://i.redd.it/glin0nwndo501.jpg");
-        mNames.add("White Sands Desert");
 
-        mImageUrls.add("https://i.redd.it/obx4zydshg601.jpg");
-        mNames.add("Austrailia");
+                        Product[] top = new Product[0];
+                        addtoRecycler(top);
+                        addtoRecycler2(top);
 
-        mImageUrls.add("https://i.imgur.com/ZcLLrkY.jpg");
-        mNames.add("Washington");
+                        break;
+                    case 1:
 
+                        
+                        Call<Product[]> call1 = ApiAdapter.getApiService().getVideogames();
+
+                        call1.enqueue(new Callback<Product[]>()
+                        {
+                            @Override
+                            public void onResponse(Call<Product[]> call, Response<Product[]> response)
+                            {
+                                if (response.isSuccessful())
+                                {
+                                    tvCategoria1.setText("RPG");
+                                    tvCategoria2.setText("Plataformas");
+
+                                    Product[] videogames = new Videogame[response.body().length];
+
+                                    videogames = response.body();
+
+                                    addtoRecycler(videogames);
+
+                                    addtoRecycler2(videogames);
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Product[]> call, Throwable t)
+                            {
+                                Log.e(TAG, "onFailure: call de Smartphones", t);
+                            }
+                        });
+
+                        break;
+                    case 2:
+
+                        Call<Product[]> call2 = ApiAdapter.getApiService().getSmartphones();
+
+                        call2.enqueue(new Callback<Product[]>()
+                        {
+                            @Override
+                            public void onResponse(Call<Product[]> call, Response<Product[]> response)
+                            {
+                                if (response.isSuccessful())
+                                {
+                                    tvCategoria1.setText("Móviles Xiaomi");
+                                    tvCategoria2.setText("Móviles Samsung");
+
+                                    Product[] smartphones = new Smartphone[response.body().length];
+
+                                    smartphones = response.body();
+
+                                    addtoRecycler(smartphones);
+
+                                    addtoRecycler2(smartphones);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Product[]> call, Throwable t)
+                            {
+                                Log.e(TAG, "onFailure: call de Smartphones", t);
+                            }
+                        });
+
+                        break;
+                    case 3:
+                        Call<Product[]> call3 = ApiAdapter.getApiService().getTablets();
+
+                        call3.enqueue(new Callback<Product[]>()
+                        {
+                            @Override
+                            public void onResponse(Call<Product[]> call, Response<Product[]> response)
+                            {
+                                if (response.isSuccessful())
+                                {
+                                    tvCategoria1.setText("Tablets Wortex");
+                                    tvCategoria2.setText("Tablets Sony");
+                                    Product[] tablets = new Tablet[response.body().length];
+
+                                    tablets = response.body();
+
+                                    addtoRecycler(tablets);
+
+                                    addtoRecycler2(tablets);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Product[]> call, Throwable t)
+                            {
+                                Log.e(TAG, "onFailure: call de Smartphones", t);
+                            }
+                        });
+
+                        break;
+                    case 4:
+                        Call<Product[]> call4 = ApiAdapter.getApiService().getConsoles();
+
+                        call4.enqueue(new Callback<Product[]>()
+                        {
+                            @Override
+                            public void onResponse(Call<Product[]> call, Response<Product[]> response)
+                            {
+                                if (response.isSuccessful())
+                                {
+                                    tvCategoria1.setText("Nintendo");
+                                    tvCategoria2.setText("Play Station 4");
+
+                                    Product[] consoles = new Console[response.body().length];
+
+                                    consoles = response.body();
+
+                                    addtoRecycler(consoles);
+
+                                    addtoRecycler2(consoles);
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Product[]> call, Throwable t)
+                            {
+                                Log.e(TAG, "onFailure: call de Smartphones", t);
+                            }
+                        });
+
+                        break;
+
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab)
+            {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab)
+            {
+
+            }
+        });
+
+    }
+
+    private void addtoRecycler(Product[] data)
+    {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+
+        RecyclerView recyclerView = getView().findViewById(R.id.rvProducts);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context);
+
+
+        recyclerView.setAdapter(adapter);
+
+    }
+    private void addtoRecycler2(Product[] data)
+    {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+
+        RecyclerView recyclerView = getView().findViewById(R.id.rvProducts2);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context);
+
+
+        recyclerView.setAdapter(adapter);
 
     }
 
