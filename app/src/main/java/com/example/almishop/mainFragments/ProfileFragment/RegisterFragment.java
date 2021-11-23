@@ -1,9 +1,7 @@
-package com.example.almishop.mainFragments.ShopFragment;
+package com.example.almishop.mainFragments.ProfileFragment;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,11 +15,14 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.example.almishop.DatePickerFragment;
+import com.example.almishop.MainActivity;
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
+import com.example.almishop.mainFragments.ShopFragment.ProfileDialogFragment;
+import com.example.almishop.mainFragments.ShopFragment.SearchBarFragment;
 import com.example.almishop.model.Register;
 import com.example.almishop.model.User;
 
@@ -29,68 +30,44 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterDialogFragment extends DialogFragment
+public class RegisterFragment extends Fragment
 {
     private static String TAG = "REGISTER DIALOG";
     private SharedPreferences localStorage;
     private SharedPreferences.Editor localStorageEditor;
+    private MainActivity activity;
+    private Context context;
     private ImageView btnClose;
     private EditText etEmail, etPassword, etRepassword, etName, etSurname1, etSurname2, etBirthdate;
     private Button btnRegister;
 
-    public RegisterDialogFragment()
+    public RegisterFragment() { super(); }
+
+    @Override
+    public void onAttach(Context context)
     {
-        super();
+        this.context = context;
+        super.onAttach(context);
     }
 
     @Override
-    public void onStart()
-    {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null)
-        {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            dialog.getWindow().setLayout(width, height);
-        }
-    }
-
-    @Override
-    public void onDetach()
-    {
-        super.onDetach();
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
-    {
-        Dialog dialog =  super.onCreateDialog(savedInstanceState);
-        dialog.setTitle("Login");
-        return dialog;
-    }
-
-    @Override
-    public void onCancel(@NonNull DialogInterface dialog)
-    {
-        super.onCancel(dialog);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
-        View view;
-        localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
-        localStorageEditor = localStorage.edit();
-        view = inflater.inflate(R.layout.fragment_dialog_register, container, false);
-        return view;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_dialog_register, null);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
+        localStorageEditor = localStorage.edit();
+        activity = (MainActivity) getActivity();
+
         btnClose = view.findViewById(R.id.btnCloseRegister);
         etEmail = view.findViewById(R.id.etRegisterEmail);
         etPassword = view.findViewById(R.id.etRegisterPassword);
@@ -142,7 +119,7 @@ public class RegisterDialogFragment extends DialogFragment
             @Override
             public void onClick(View view)
             {
-                dismiss();
+                activity.navigateTo(activity.mainFragments.get(0));
             }
         });
 
@@ -174,7 +151,8 @@ public class RegisterDialogFragment extends DialogFragment
                                     localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
                                     ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
                                     profileDialogFragment.dismiss();
-                                    dismiss();
+                                    getActivity().getSupportFragmentManager().popBackStackImmediate();
+//                                    dismiss();
                                 } else
                                 {
                                     Log.d(TAG, "Register failed. Username: " + email + " Password: " + password);
@@ -196,6 +174,10 @@ public class RegisterDialogFragment extends DialogFragment
                 }
             }
         });
-        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

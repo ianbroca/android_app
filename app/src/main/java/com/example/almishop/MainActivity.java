@@ -14,6 +14,8 @@ import android.view.ViewGroup.LayoutParams;
 import com.example.almishop.mainFragments.AboutUsFragment;
 import com.example.almishop.mainFragments.GalleryFragment;
 import com.example.almishop.mainFragments.LocationFragment;
+import com.example.almishop.mainFragments.ProfileFragment.ChangePasswordFragment;
+import com.example.almishop.mainFragments.ProfileFragment.RegisterFragment;
 import com.example.almishop.mainFragments.ShopFragment.SearchBarFragment;
 import com.example.almishop.mainFragments.ShopFragment.ShopFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,10 +25,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    public final int SEARCH_BAR_HEIGHT = 200;
     public LinearLayout searchBar, content;
     BottomNavigationView menu;
-    ArrayList<Fragment> mainFragments;
+    public ArrayList<Fragment> mainFragments;
+    public RegisterFragment registerFragment;
+    public ChangePasswordFragment changePasswordFragment;
     int selectedIndex = 0;
 
     @Override
@@ -37,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         setContentView(R.layout.activity_main);
+
+        registerFragment = new RegisterFragment();
+        changePasswordFragment = new ChangePasswordFragment();
 
         searchBar = findViewById(R.id.fragmentSearchBarView);
         content = findViewById(R.id.fragmentContainerView);
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragmentSearchBarView, new SearchBarFragment())
                 .commit();
         toggleSearchBar(true);
+        toggleMenu(true);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -67,28 +74,44 @@ public class MainActivity extends AppCompatActivity {
                 {
                     case "Localización":
                         selectedIndex = 1;
-                        toggleSearchBar(false);
                         break;
                     case "Galería":
                         selectedIndex = 2;
-                        toggleSearchBar(false);
                         break;
                     case "Sobre nosotros":
                         selectedIndex = 3;
-                        toggleSearchBar(false);
                         break;
                     default:
                         selectedIndex = 0;
-                        toggleSearchBar(true);
                         break;
                 }
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainerView, mainFragments.get(selectedIndex))
-                        .commit();
+                navigateTo(mainFragments.get(selectedIndex));
                 return false;
             }
         });
+    }
+
+    public void navigateTo(Fragment fragment)
+    {
+        if (mainFragments.contains(fragment))
+        {
+            toggleMenu(true);
+            if (fragment == mainFragments.get(0))
+            {
+                toggleSearchBar(true);
+            } else
+            {
+                toggleSearchBar(false);
+            }
+        } else
+        {
+            toggleMenu(false);
+            toggleSearchBar(false);
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainerView, fragment)
+                .commit();
     }
 
     private void toggleSearchBar(boolean value)
@@ -96,12 +119,27 @@ public class MainActivity extends AppCompatActivity {
         LayoutParams params = searchBar.getLayoutParams();
         if (value)
         {
-            params.height = SEARCH_BAR_HEIGHT;
+            params.height = params.WRAP_CONTENT;
             searchBar.setLayoutParams(params);
         } else
         {
             params.height = 0;
             searchBar.setLayoutParams(params);
+        }
+    }
+
+    public void toggleMenu(boolean value)
+    {
+        LayoutParams params = menu.getLayoutParams();
+        Log.d("TAG", "toggleMenu: " + params.height);
+        if (value)
+        {
+            params.height = params.WRAP_CONTENT;
+            menu.setLayoutParams(params);
+        } else
+        {
+            params.height = 0;
+            menu.setLayoutParams(params);
         }
     }
 }

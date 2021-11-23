@@ -1,4 +1,4 @@
-package com.example.almishop;
+package com.example.almishop.model;
 
 public class Us {
 

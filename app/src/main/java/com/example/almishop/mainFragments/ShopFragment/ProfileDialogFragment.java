@@ -13,25 +13,34 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.almishop.ListAdapter;
+import com.example.almishop.MainActivity;
 import com.example.almishop.R;
+import com.example.almishop.io.ApiAdapter;
+import com.example.almishop.mainFragments.ProfileFragment.RegisterFragment;
+import com.example.almishop.model.User;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
 
 public class ProfileDialogFragment extends DialogFragment
 {
     private static String TAG = "ProfileDialogFragment";
     private DialogFragment dialog;
+    private MainActivity activity;
 
     private SharedPreferences localStorage;
     private SharedPreferences.Editor localStorageEditor;
     private ListView listView;
     private ImageView btnClose;
+    private TextView tvName = null, tvBirthdate = null;
     private Button btnLogout = null;
 
     public ProfileDialogFragment()
@@ -65,7 +74,8 @@ public class ProfileDialogFragment extends DialogFragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View view;
-        localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
+        activity = (MainActivity) getActivity();
+        localStorage = activity.getPreferences(Context.MODE_PRIVATE);
         localStorageEditor = localStorage.edit();
 
         ArrayList<String> listElements = new ArrayList<String>();
@@ -79,6 +89,8 @@ public class ProfileDialogFragment extends DialogFragment
             view = inflater.inflate(R.layout.fragment_dialog_profile, container, false);
             btnClose = view.findViewById(R.id.btnCloseProfile);
             btnLogout = view.findViewById(R.id.btnLogin);
+            tvName = view.findViewById(R.id.tvProfileName);
+            tvBirthdate = view.findViewById(R.id.tvProfileBirthdate);
         } else
         {
             listElements.add("Iniciar sesión");
@@ -96,6 +108,10 @@ public class ProfileDialogFragment extends DialogFragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
+        if (tvName != null)
+        {
+//            Call<User> call = ApiAdapter.getApiService().getUserById(LocalStorage);
+        }
         btnClose.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -124,6 +140,8 @@ public class ProfileDialogFragment extends DialogFragment
                             break;
                         case 3: // Cambiar password
                             Log.d(TAG, "onItemClick: Navigate to change password");
+                            activity.navigateTo(activity.changePasswordFragment);
+                            dismiss();
                             break;
                     }
                 } else
@@ -137,9 +155,11 @@ public class ProfileDialogFragment extends DialogFragment
                             //localStorageEditor.putString(getString(R.string.id_user), "1").commit();
                             break;
                         case 1: // Registrarse
-                            dialog = new RegisterDialogFragment();
-                            dialog.show(getActivity().getSupportFragmentManager(), "Register");
                             Log.d(TAG, "onItemClick: Navigate to register");
+                            activity.navigateTo(activity.registerFragment);
+                            dismiss();
+//                            dialog = new RegisterDialogFragment();
+//                            dialog.show(getActivity().getSupportFragmentManager(), "Register");
                             break;
                     }
                 }

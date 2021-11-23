@@ -7,106 +7,112 @@
     android:layout_height="match_parent"
     tools:context=".mainFragments.AboutUsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivAlmiTitle"
-            android:layout_width="173dp"
-            android:layout_height="68dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/alminame"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvText"
-            android:layout_width="313dp"
-            android:layout_height="148dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/about_us_text"
-            android:textAlignment="center"
-            android:textColor="#454545"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivAlmiTitle" />
+            <GridView
+                android:id="@+id/gvDevs"
+                android:layout_width="350dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginEnd="30dp"
+                android:numColumns="4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvText" />
 
-        <TextView
-            android:id="@+id/tvFollowUs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/about_us_follow"
-            android:textColor="#404040"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gvDevs" />
+            <ImageView
+                android:id="@+id/ivAlmiTitle"
+                android:layout_width="173dp"
+                android:layout_height="68dp"
+                android:layout_marginTop="28dp"
+                android:src="@drawable/alminame"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivYt"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivTw"
-            app:layout_constraintHorizontal_bias="0.68"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvFollowUs"
-            app:layout_constraintVertical_bias="0.264"
-            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            <TextView
+                android:id="@+id/tvText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:includeFontPadding="false"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="@string/about_us_text"
+                android:textAlignment="center"
+                android:textColor="#454545"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivAlmiTitle" />
 
-        <ImageView
-            android:id="@+id/ivTw"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivInsta"
-            app:layout_constraintStart_toEndOf="@+id/ivYt"
-            app:layout_constraintTop_toBottomOf="@+id/tvFollowUs"
-            app:layout_constraintVertical_bias="0.264"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            <ImageView
+                android:id="@+id/ivTw"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="79dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="79dp"
+                android:layout_marginBottom="32dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ivInsta"
+                app:layout_constraintStart_toEndOf="@+id/ivYt"
+                app:layout_constraintTop_toBottomOf="@+id/tvFollowUs"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-        <ImageView
-            android:id="@+id/ivInsta"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.32"
-            app:layout_constraintStart_toEndOf="@+id/ivTw"
-            app:layout_constraintTop_toBottomOf="@+id/tvFollowUs"
-            app:layout_constraintVertical_bias="0.264"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            <TextView
+                android:id="@+id/tvFollowUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="136dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="137dp"
+                android:text="@string/about_us_follow"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gvDevs" />
 
-        <GridView
-            android:id="@+id/gvDevs"
-            android:layout_width="350dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="30dp"
-            android:numColumns="4"
-            app:layout_constraintBottom_toTopOf="@+id/tvFollowUs"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvText"
-            app:layout_constraintVertical_bias="0.096" />
+            <ImageView
+                android:id="@+id/ivInsta"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="78dp"
+                android:layout_marginBottom="32dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFollowUs"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/ivYt"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="79dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="32dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFollowUs"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </FrameLayout>

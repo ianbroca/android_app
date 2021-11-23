@@ -1,4 +1,3 @@
-
 package com.example.almishop;
 
 import android.content.Context;
@@ -10,43 +9,43 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.almishop.model.StoreImages;
 import com.example.almishop.model.Us;
 
 import java.util.ArrayList;
 
-
-public class AboutUsGridAdapter extends BaseAdapter {
+public class GalleryGridAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<Us> devList = new ArrayList<>();
+    private ArrayList<StoreImages> imgList = new ArrayList<>();
 
-    public AboutUsGridAdapter(Context context, ArrayList<Us> devList) {
+    public GalleryGridAdapter(Context context, ArrayList<StoreImages> imgList) {
         this.context = context;
-        this.devList = devList;
+        this.imgList = imgList;
     }
 
     @Override
     public int getCount() {
-        return devList.size();
+        return imgList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return devList.get(i);
+        return imgList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return devList.get(i).getId();
+        return 0;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(this.context);
-        View imgView = inflater.inflate(R.layout.about_us_grid, viewGroup, false);
-        ImageView img = imgView.findViewById(R.id.ivDev);
-        TextView txt = imgView.findViewById(R.id.tvDevName);
-        txt.setText(devList.get(i).getName());
-        Glide.with(context).load(devList.get(i).getIconUrl()).centerCrop().into(img);
+        View imgView = inflater.inflate(R.layout.grid_gallery_image, viewGroup, false);
+        ImageView img = imgView.findViewById(R.id.ivGallery);
+        TextView txt = imgView.findViewById(R.id.tvGallery);
+        txt.setText(imgList.get(i).getBottomText());
+        Glide.with(context).load(imgList.get(i).getImgUrl()).centerCrop().into(img);
         return imgView;
     }
 }

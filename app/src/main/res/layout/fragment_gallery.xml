@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".mainFragments.GalleryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <GridView
+        android:id="@+id/gvGallery"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/title_gallery" />
-
+        android:numColumns="2" />
 </FrameLayout>

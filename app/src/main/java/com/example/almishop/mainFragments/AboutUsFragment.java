@@ -9,17 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.almishop.AboutUsGridAdapter;
 import com.example.almishop.R;
-import com.example.almishop.Us;
+import com.example.almishop.model.Us;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,7 @@ public class AboutUsFragment extends Fragment {
 
     private ArrayList<Us> devList = new ArrayList<>();
     private GridView gvDevs;
+    private TextView tvText;
 
     public AboutUsFragment() {
         super();
@@ -49,7 +51,6 @@ public class AboutUsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fillDevArray();
     }
 
     @Nullable
@@ -62,8 +63,14 @@ public class AboutUsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        devList.clear();
+        fillDevArray();
+
         gvDevs = getView().findViewById(R.id.gvDevs);
         gvDevs.setAdapter(new AboutUsGridAdapter(getContext(), devList));
+
+        tvText = getView().findViewById(R.id.tvText);
+        tvText.setMovementMethod(new ScrollingMovementMethod());
 
         ImageView imgYt = view.findViewById(R.id.ivYt);
         ImageView imgTw = view.findViewById(R.id.ivTw);
