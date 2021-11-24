@@ -13,9 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.bumptech.glide.Glide;
+import com.example.almishop.MainActivity;
 import com.example.almishop.R;
 
 public class SearchBarFragment extends Fragment {
+
+    private MainActivity activity;
     public ProfileDialogFragment dialog;
     Context context;
     ImageButton btnProfile;
@@ -45,6 +48,9 @@ public class SearchBarFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        activity = (MainActivity) getActivity();
+
         // mas cosas
         btnProfile = view.findViewById(R.id.btnProfile);
 
@@ -54,6 +60,7 @@ public class SearchBarFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
+                activity.getLocation();
                 dialog = new ProfileDialogFragment();
                 dialog.show(getActivity().getSupportFragmentManager(), "Profile");
             }
