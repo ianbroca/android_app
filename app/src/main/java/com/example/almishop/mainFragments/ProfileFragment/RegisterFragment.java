@@ -24,6 +24,9 @@ import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.model.Register;
 import com.example.almishop.model.User;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -135,7 +138,11 @@ public class RegisterFragment extends Fragment
                 String birthdate = etBirthdate.getText().toString();
                 Register data = new Register(email, password, name, surname1, surname2, birthdate);
 
-                if (password.equals(repassword))
+                Pattern p = Pattern.compile("[^A-Za-z0-9]");
+                Matcher m = p.matcher(password);
+                boolean finder = m.find();
+
+                if (password.equals(repassword) && email.contains("@") && !email.trim().equals("") && !password.equals("") && !name.trim().equals("") && !surname1.trim().equals("") && !birthdate.equals("") && !finder)
                 {
                     Call<User> call = ApiAdapter.getApiService().register(data);
                     call.enqueue(new Callback<User>() {
@@ -165,10 +172,13 @@ public class RegisterFragment extends Fragment
 
                         }
                     });
-                } else
-                {
+                } else if (!password.equals(repassword)) {
                     Log.d(TAG, "onClick: Las contraseñas no coinciden");
                     // DIALOGO DE ERROR PORQUE ERES GILIPOLLAS
+                } else if (finder) {
+                    Log.e(TAG, "onClick: Contraseña con carácteres especiales.");
+                } else {
+                    Log.e(TAG, "onClick: Campos vacíos");
                 }
             }
         });
