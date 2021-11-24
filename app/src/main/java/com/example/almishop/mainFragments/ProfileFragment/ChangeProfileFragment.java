@@ -159,34 +159,38 @@ public class ChangeProfileFragment extends Fragment
                 ChangeProfile data = new ChangeProfile(id, name, surname1, surname2, birthdate);
 
                 Log.d(TAG, "DATA: " + name + " " + surname1 + " " + surname2 + " " + birthdate);
-                Call<Integer> call = ApiAdapter.getApiService().changeProfile(data);
-                call.enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        try {
-                            if (response.isSuccessful())
-                            {
-                                int res = response.body();
-                                localStorageEditor.putString(getString(R.string.id_user), "" + id).commit();
-                                activity.navigateTo(activity.mainFragments.get(0));
+                if (!name.trim().equals("") && !surname1.trim().equals("") && !surname2.trim().equals("") && !birthdate.equals("")) {
+                    Call<Integer> call = ApiAdapter.getApiService().changeProfile(data);
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            try {
+                                if (response.isSuccessful())
+                                {
+                                    int res = response.body();
+                                    localStorageEditor.putString(getString(R.string.id_user), "" + id).commit();
+                                    activity.navigateTo(activity.mainFragments.get(0));
 //                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
 //                                    profileDialogFragment.dismiss();
 //                                    dismiss();
-                            } else
-                            {
-                                Log.d(TAG, "Error al guardar los cambios.");
+                                } else
+                                {
+                                    Log.d(TAG, "Error al guardar los cambios.");
+                                }
+                            } catch (Exception ex) {
+                                Log.d(TAG, "PROFILE ERROR");
                             }
-                        } catch (Exception ex) {
-                            Log.d(TAG, "PROFILE ERROR");
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t)
-                    {
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t)
+                        {
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    Log.e(TAG, "onClick: KO - Campos vacíos");
+                }
             }
         });
     }
