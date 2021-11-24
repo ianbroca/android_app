@@ -159,16 +159,15 @@ public class ChangeProfileFragment extends Fragment
                 ChangeProfile data = new ChangeProfile(id, name, surname1, surname2, birthdate);
 
                 Log.d(TAG, "DATA: " + name + " " + surname1 + " " + surname2 + " " + birthdate);
-                Call<User> call = ApiAdapter.getApiService().changeProfile(data);
-                call.enqueue(new Callback<User>() {
+                Call<Integer> call = ApiAdapter.getApiService().changeProfile(data);
+                call.enqueue(new Callback<Integer>() {
                     @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
                         try {
                             if (response.isSuccessful())
                             {
-                                User user = response.body();
-                                Log.d(TAG, "Profile updated: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2() + " " + user.getBirthdate());
-                                localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
+                                int res = response.body();
+                                localStorageEditor.putString(getString(R.string.id_user), "" + id).commit();
                                 getActivity().getSupportFragmentManager().popBackStackImmediate();
 //                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
 //                                    profileDialogFragment.dismiss();
@@ -183,7 +182,8 @@ public class ChangeProfileFragment extends Fragment
                     }
 
                     @Override
-                    public void onFailure(Call<User> call, Throwable t) {
+                    public void onFailure(Call<Integer> call, Throwable t)
+                    {
 
                     }
                 });
