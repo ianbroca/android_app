@@ -44,8 +44,10 @@ public interface ApiService
     Call<AnyRes> sendLocation(@Body Location data);
 
     @PUT("user/edit")
-    Call<User> changePassword(@Body ChangePassword data);
+    Call<Integer> changePassword(@Body ChangePassword data);
 
+    @PUT("user/edit")
+    Call<Integer> changeProfile(@Body ChangeProfile data);
 
     @GET("product/smartphones")
     Call<Product[]> getSmartphones();
@@ -61,6 +63,5 @@ public interface ApiService
     Call<Product[]> getVideogames();
 
 
-    @PUT("user/edit")
-    Call<User> changeProfile(@Body ChangeProfile data);
+
 }
