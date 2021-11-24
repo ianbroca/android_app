@@ -1,8 +1,9 @@
 package com.example.almishop.model;
 
+import java.io.Serializable;
 import java.util.Optional;
 
-public class Smartphone extends Product
+public class Smartphone extends Product implements Serializable
 {
     private String storage;
     private String ram;
@@ -16,9 +17,9 @@ public class Smartphone extends Product
 
     }
 
-    public Smartphone(String id, String name, String price, String stock_sale, String id_brand, String cover, String images, String discount, String priceDiscounted, String storage, String ram, String inches, String battery, String has_sd, String color)
+    public Smartphone(String id, String id_product_type, String name, String price, String stock_sale, String id_brand, String cover, String[] images, String discount, String priceDiscounted, String storage, String ram, String inches, String battery, String has_sd, String color)
     {
-        super(id, name, price, stock_sale, id_brand, cover, images, discount, priceDiscounted);
+        super(id,id_product_type, name, price, stock_sale, id_brand, cover, images, discount, priceDiscounted);
         this.storage = storage;
         this.ram = ram;
         this.inches = inches;

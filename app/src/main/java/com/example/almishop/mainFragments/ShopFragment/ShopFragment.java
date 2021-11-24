@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.almishop.MainActivity;
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.mainFragments.ShopFragment.adapters.RecyclerViewAdapter;
@@ -290,7 +291,7 @@ public class ShopFragment extends Fragment
         recyclerView.setLayoutManager(layoutManager);
 
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context );
 
 
         recyclerView.setAdapter(adapter);
@@ -305,7 +306,7 @@ public class ShopFragment extends Fragment
         recyclerView.setLayoutManager(layoutManager);
 
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context );
 
 
         recyclerView.setAdapter(adapter);

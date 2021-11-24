@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainFragments.ShopFragment.SearchBarFragment" >
+    tools:context=".mainFragments.ShopFragment.SearchBarFragment"
+    android:elevation="5dp">
 
     <SearchView
         android:layout_gravity="center"

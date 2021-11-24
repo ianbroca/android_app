@@ -67,5 +67,7 @@ public interface ApiService
     Call<Product[]> getVideogames();
 
 
+    @GET("product/smartphones/{id}")
+    Call<Smartphone> getSmartphoneById(@Path("id") String id);
 
 }

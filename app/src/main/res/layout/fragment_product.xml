@@ -6,7 +6,7 @@
         android:layout_height="match_parent">
 
     <LinearLayout
-        android:paddingTop="60dp"
+        android:paddingTop="140dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -16,28 +16,45 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center">
+            android:layout_gravity="left"
+            android:paddingLeft="30dp">
             <ImageView
+                android:id="@+id/ivProduct"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:paddingRight="20dp"
                 android:src="@drawable/alminame">
             </ImageView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Funciona la vista de productos">
-            </TextView>
+            <LinearLayout
+                android:layout_width="195dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/tvProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Funciona la vista de productos">
+                </TextView>
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/tvPreoductBrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="asdasdasd">
+                </TextView>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingLeft="50dp"
+            android:paddingLeft="40dp"
             android:paddingBottom="30dp"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tvPrice"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,6 +63,7 @@
                 android:textColor="@color/danger_red">
             </TextView>
             <TextView
+                android:id="@+id/tvStock_sale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="quedan x inidades">
@@ -61,27 +79,30 @@
             tools:ignore="TouchTargetSizeCheck"></Button>
         <LinearLayout
             android:paddingTop="30dp"
-            android:paddingLeft="25dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
+                android:paddingBottom="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Caracteristícas"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold">
             </TextView>
 
             <ListView
                 android:id="@+id/lvproducData"
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_height="260dp">
+
             </ListView>
         </LinearLayout>
 
         <TextView
-            android:paddingLeft="25dp"
+            android:paddingLeft="20dp"
             android:id="@+id/tvGaleria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,8 +112,7 @@
         </TextView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:paddingLeft="25dp"
-            android:id="@+id/rvProducts2"
+            android:id="@+id/rvImagesProduct"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:orientation="horizontal"

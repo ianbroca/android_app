@@ -29,6 +29,7 @@ import com.example.almishop.mainFragments.ProfileFragment.ChangePasswordFragment
 import com.example.almishop.mainFragments.ProfileFragment.ChangePictureFragment;
 import com.example.almishop.mainFragments.ProfileFragment.ChangeProfileFragment;
 import com.example.almishop.mainFragments.ProfileFragment.RegisterFragment;
+import com.example.almishop.mainFragments.ShopFragment.ProductFragment;
 import com.example.almishop.mainFragments.ShopFragment.SearchBarFragment;
 import com.example.almishop.mainFragments.ShopFragment.ShopFragment;
 import com.example.almishop.model.Location;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragmentSearchBarView, new SearchBarFragment())
+                .replace(R.id.fragmentSearchBarView, new SearchBarFragment())
                 .commit();
         toggleSearchBar(true);
         toggleMenu(true);
@@ -115,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .add(R.id.fragmentContainerView, mainFragments.get(selectedIndex))
                 .commit();
+
+
 
 
         menu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -134,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     default:
                         selectedIndex = 0;
+                        Fragment searchbar = new SearchBarFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentSearchBarView, searchbar).addToBackStack(null).commit();
                         break;
                 }
                 navigateTo(mainFragments.get(selectedIndex));

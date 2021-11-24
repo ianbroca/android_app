@@ -11,15 +11,17 @@ public class Product implements Serializable
     private String stock_sale;
     private String id_brand;
     private String cover;
-    private String images;
+    private String[] images;
     private String discount;
     private String priceDiscounted;
+    private String id_product_type;
 
     public Product() { }
 
-    public Product(String id, String name, String price, String stock_sale, String id_brand, String cover, String images, String discount, String priceDiscounted)
+    public Product(String id, String id_product_type, String name, String price, String stock_sale, String id_brand, String cover, String[] images, String discount, String priceDiscounted)
     {
         this.id = id;
+        this.id_product_type = id_product_type;
         this.name = name;
         this.price = price;
         this.stock_sale = stock_sale;
@@ -90,12 +92,12 @@ public class Product implements Serializable
         this.cover = cover;
     }
 
-    public String getImages()
+    public String[] getImages()
     {
         return images;
     }
 
-    public void setImages(String images)
+    public void setImages(String[] images)
     {
         this.images = images;
     }
@@ -118,5 +120,15 @@ public class Product implements Serializable
     public void setPriceDiscounted(String priceDiscounted)
     {
         this.priceDiscounted = priceDiscounted;
+    }
+
+    public String getId_product_type()
+    {
+        return id_product_type;
+    }
+
+    public void setId_product_type(String id_product_type)
+    {
+        this.id_product_type = id_product_type;
     }
 }

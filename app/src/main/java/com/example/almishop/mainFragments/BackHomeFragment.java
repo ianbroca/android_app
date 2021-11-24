@@ -11,10 +11,13 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
+import com.example.almishop.mainFragments.ShopFragment.ProductFragment;
+import com.example.almishop.mainFragments.ShopFragment.SearchBarFragment;
 
 public class BackHomeFragment extends Fragment
 {
@@ -46,14 +49,15 @@ public class BackHomeFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         btnBack = view.findViewById(R.id.btnBack);
+
         btnBack.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View view)
+            public void onClick(View v)
             {
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+
             }
         });
     }
