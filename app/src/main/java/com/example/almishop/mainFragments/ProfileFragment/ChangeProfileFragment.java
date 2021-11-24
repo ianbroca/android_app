@@ -17,13 +17,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.example.almishop.DatePickerFragment;
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.model.ChangeProfile;
-import com.example.almishop.model.Register;
 import com.example.almishop.model.User;
 
 import retrofit2.Call;
