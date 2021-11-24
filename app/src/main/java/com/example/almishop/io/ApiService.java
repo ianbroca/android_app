@@ -3,6 +3,7 @@ package com.example.almishop.io;
 import androidx.annotation.AnyRes;
 
 import com.example.almishop.model.ChangePassword;
+import com.example.almishop.model.ChangePicture;
 import com.example.almishop.model.ChangeProfile;
 import com.example.almishop.model.Location;
 import com.example.almishop.model.Login;
@@ -44,10 +45,13 @@ public interface ApiService
     Call<AnyRes> sendLocation(@Body Location data);
 
     @PUT("user/edit")
-    Call<Integer> changePassword(@Body ChangePassword data);
+    Call<Integer> changeProfile(@Body ChangeProfile data);
 
     @PUT("user/edit")
-    Call<Integer> changeProfile(@Body ChangeProfile data);
+    Call<Integer> changePicture(@Body ChangePicture data);
+
+    @PUT("user/edit")
+    Call<Integer> changePassword(@Body ChangePassword data);
 
     @GET("product/smartphones")
     Call<Product[]> getSmartphones();
