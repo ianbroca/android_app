@@ -3,10 +3,10 @@ package com.example.almishop.model;
 public class Location
 {
     private int id_user;
-    private Float latitude;
-    private Float longitude;
+    private double latitude;
+    private double longitude;
 
-    public Location(int id_user, Float latitude, Float longitude)
+    public Location(int id_user, double latitude, double longitude)
     {
         this.id_user = id_user;
         this.latitude = latitude;
@@ -23,7 +23,7 @@ public class Location
         this.id_user = id_user;
     }
 
-    public Float getLatitude()
+    public double getLatitude()
     {
         return latitude;
     }
@@ -33,7 +33,7 @@ public class Location
         this.latitude = latitude;
     }
 
-    public Float getLongitude()
+    public double getLongitude()
     {
         return longitude;
     }

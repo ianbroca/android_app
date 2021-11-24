@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,14 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
+import com.example.almishop.io.ApiAdapter;
+import com.example.almishop.model.ChangePassword;
+import com.example.almishop.model.Login;
+import com.example.almishop.model.User;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChangePasswordFragment extends DialogFragment {
 
@@ -27,6 +36,7 @@ public class ChangePasswordFragment extends DialogFragment {
 
     private EditText etOldPassword, etNewPassword, etRepeatNewPassword;
     private Button btnChangePassword;
+    private ImageView btnCloseRegister;
 
     public ChangePasswordFragment() { super(); }
 
@@ -54,10 +64,19 @@ public class ChangePasswordFragment extends DialogFragment {
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
 
+        btnCloseRegister = getView().findViewById(R.id.btnCloseRegister);
         btnChangePassword = getView().findViewById(R.id.btnChangePassword);
         etOldPassword = getView().findViewById(R.id.etOldPassword);
         etNewPassword = getView().findViewById(R.id.etNewPassword);
         etRepeatNewPassword = getView().findViewById(R.id.etRepeatNewPassword);
+
+        btnCloseRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.navigateTo(activity.mainFragments.get(0));
+            }
+        });
+
 
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +88,68 @@ public class ChangePasswordFragment extends DialogFragment {
                 if (!oldPassword.equals(newPassword) && newPassword.equals(repeatNewPassword) && !newPassword.equals("")) {
                     Log.d(TAG, "onClick: changePwd OK!");
 
-                    //Call<User> call = ApiAdapter.getApiService().getUserById(localStorage.getString(getString(R.string.id_user), "");
+                    Call<User> getUserCall = ApiAdapter.getApiService().getUserById(Integer.parseInt(localStorage.getString(getString(R.string.id_user), "")));
+                    getUserCall.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            User user = response.body();
+                            if (response.isSuccessful() && user.getEmail() != null) {
+                                Log.d(TAG, "changePwd getUser OK!");
+
+                                Login loginData = new Login(user.getEmail(), oldPassword);
+                                Call<User> postLoginCall = ApiAdapter.getApiService().login(loginData);
+                                postLoginCall.enqueue(new Callback<User>() {
+                                    @Override
+                                    public void onResponse(Call<User> call, Response<User> response) {
+                                        User userLogin = response.body();
+                                        if (response.isSuccessful() && userLogin.getEmail() != null) {
+                                            Log.d(TAG, "changePwd login OK!");
+
+                                            ChangePassword changePassword = new ChangePassword(userLogin.getId(), newPassword);
+                                            Call<Integer> putChangePasswordCall = ApiAdapter.getApiService().changePassword(changePassword);
+                                            putChangePasswordCall.enqueue(new Callback<Integer>() {
+                                                @Override
+                                                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                                    if (response.isSuccessful() && response.body() == 200) {
+                                                        Log.d(TAG, "PASSWORD CHANGED DONE! - SERVICE TERMINATED");
+
+                                                        activity.navigateTo(activity.mainFragments.get(0));
+                                                    } else if (response.body() != 200) {
+                                                        Log.d(TAG, "changePwd changePwdCall KO - incorrect response (response != 200)");
+                                                    } else {
+                                                        Log.d(TAG, "changePwd changePwdCall KO - response NOT successful");
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<Integer> call, Throwable t) {
+                                                    Log.d(TAG, "changePwd changePwdCall KO - " + t);
+                                                }
+                                            });
+                                        } else if (userLogin.getEmail() != null) {
+                                            Log.d(TAG, "changePwd login KO - response empty");
+                                        } else {
+                                            Log.d(TAG, "changePwd login KO - response NOT successful");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<User> call, Throwable t) {
+                                        Log.d(TAG, "changePwd login KO - " + t);
+                                    }
+                                });
+                            } else if (user.getEmail() != null) {
+                                Log.d(TAG, "changePwd getUser KO - response empty");
+                            } else {
+                                Log.d(TAG, "changePwd getUser KO - response NOT successful");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            Log.d(TAG, "changePwd getUser KO - " + t);
+                        }
+                    });
                 } else if (oldPassword.equals("") || newPassword.equals("") || repeatNewPassword.equals("")) {
                     Log.d(TAG, "onClick: changePWD KO - empty fields");
                 } else if (oldPassword.equals(newPassword)) {
