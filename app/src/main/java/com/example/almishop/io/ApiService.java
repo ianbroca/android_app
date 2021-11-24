@@ -42,7 +42,7 @@ public interface ApiService
     Call<User> register(@Body Register data);
 
     @POST("user/location")
-    Call<AnyRes> sendLocation(@Body Location data);
+    Call<Integer> sendLocation(@Body Location data);
 
     @PUT("user/edit")
     Call<Integer> changeProfile(@Body ChangeProfile data);

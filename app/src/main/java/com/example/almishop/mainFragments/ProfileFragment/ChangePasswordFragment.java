@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ public class ChangePasswordFragment extends DialogFragment {
 
     private EditText etOldPassword, etNewPassword, etRepeatNewPassword;
     private Button btnChangePassword;
+    private ImageView btnCloseRegister;
 
     public ChangePasswordFragment() { super(); }
 
@@ -62,10 +64,21 @@ public class ChangePasswordFragment extends DialogFragment {
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
 
+        activity.getLocation();
+
+        btnCloseRegister = getView().findViewById(R.id.btnCloseRegister);
         btnChangePassword = getView().findViewById(R.id.btnChangePassword);
         etOldPassword = getView().findViewById(R.id.etOldPassword);
         etNewPassword = getView().findViewById(R.id.etNewPassword);
         etRepeatNewPassword = getView().findViewById(R.id.etRepeatNewPassword);
+
+        btnCloseRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.navigateTo(activity.mainFragments.get(0));
+            }
+        });
+
 
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
