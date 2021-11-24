@@ -127,7 +127,7 @@ public class LoginDialogFragment extends DialogFragment
                                     dismiss();
                                 } else
                                 {
-                                    Log.d(TAG, "El corre y contraseña introducidos no coinciden.");
+                                    Log.d(TAG, "El correo y contraseña introducidos no coinciden.");
                                 }
                             } else
                             {

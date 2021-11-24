@@ -147,7 +147,7 @@ public class RegisterFragment extends Fragment
                                     User user = response.body();
                                     Log.d(TAG, "Register successful: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
                                     localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
-                                    getActivity().getSupportFragmentManager().popBackStackImmediate();
+                                    activity.navigateTo(activity.mainFragments.get(0));
 //                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
 //                                    profileDialogFragment.dismiss();
 //                                    dismiss();

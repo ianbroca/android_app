@@ -174,6 +174,8 @@ public class ProfileDialogFragment extends DialogFragment
                             break;
                         case 2: // Cambiar foto de perfil
                             Log.d(TAG, "onItemClick: Navigate to change propile picture");
+                            activity.navigateTo(activity.changePictureFragment);
+                            dismiss();
                             break;
                         case 3: // Cambiar password
                             Log.d(TAG, "onItemClick: Navigate to change password");

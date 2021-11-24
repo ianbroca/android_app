@@ -24,6 +24,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
+import com.example.almishop.io.ApiAdapter;
+import com.example.almishop.model.ChangePicture;
+import com.example.almishop.model.User;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,6 +35,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChangePictureFragment extends Fragment {
     private static String TAG = "PICTURE CHANGE DIALOG";
@@ -62,7 +69,7 @@ public class ChangePictureFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_change_password, null);
+        return inflater.inflate(R.layout.fragment_change_picture, null);
     }
 
     @Override
@@ -111,6 +118,31 @@ public class ChangePictureFragment extends Fragment {
                         }
                         Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         String encodedImage = encodeImage(selectedImage);
+                        int id = Integer.parseInt(localStorage.getString(getString(R.string.id_user), ""));
+                        ChangePicture data = new ChangePicture(id, encodedImage);
+
+                        Call<Integer> call = ApiAdapter.getApiService().changePicture(data);
+                        call.enqueue(new Callback<Integer>()
+                        {
+                            @Override
+                            public void onResponse(Call<Integer> call, Response<Integer> response)
+                            {
+                                if (response.isSuccessful())
+                                {
+                                    Log.d(TAG, "El perfil ha sido actualizado");
+                                    activity.navigateTo(activity.mainFragments.get(0));
+                                } else
+                                {
+                                    Log.d(TAG, "No se puedo actualizar el usuario con id: " + id);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Integer> call, Throwable t)
+                            {
+
+                            }
+                        });
                     }
                 }
             }

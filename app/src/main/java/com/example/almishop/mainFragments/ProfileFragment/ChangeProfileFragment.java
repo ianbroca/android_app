@@ -168,7 +168,7 @@ public class ChangeProfileFragment extends Fragment
                             {
                                 int res = response.body();
                                 localStorageEditor.putString(getString(R.string.id_user), "" + id).commit();
-                                getActivity().getSupportFragmentManager().popBackStackImmediate();
+                                activity.navigateTo(activity.mainFragments.get(0));
 //                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
 //                                    profileDialogFragment.dismiss();
 //                                    dismiss();
