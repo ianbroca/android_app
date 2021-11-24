@@ -1,12 +1,15 @@
 package com.example.almishop.mainFragments.ProfileFragment;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -20,8 +23,11 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
@@ -52,6 +58,7 @@ public class ChangePictureFragment extends Fragment {
     private ImageView ivImg;
 
     private Uri imageUri;
+    private String pfp;
 
     public ChangePictureFragment() { super(); }
 
@@ -75,9 +82,10 @@ public class ChangePictureFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
-        localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
+        localStorage = activity.getPreferences(Context.MODE_PRIVATE);
+        localStorageEditor = localStorage.edit();
+        checkExternalStoragePermission();
 
         btnCamera = view.findViewById(R.id.btnCamera);
         btnSaveChanges = view.findViewById(R.id.btnChangePicture);
@@ -86,65 +94,7 @@ public class ChangePictureFragment extends Fragment {
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(takePictureIntent.resolveActivity(activity.getPackageManager())!= null)
-                {
-                    File photoFile = null;
-                    try
-                    {
-                        photoFile = createImageFile();
-                    } catch(IOException exception)
-                    {
-
-                    }
-
-                    if(photoFile != null)
-                    {
-                        ContentValues values = new ContentValues();
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-                        String date = dateFormat.format(new Date());
-
-                        values.put(MediaStore.Images.Media.TITLE, "Picture" + date + ".jpg" );
-                        values.put(MediaStore.Images.Media.DESCRIPTION, "Photo taken on " + System.currentTimeMillis());
-                        imageUri = activity.getContentResolver().insert(
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//                        startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PHOTO);
-                        InputStream imageStream = null;
-                        try {
-                            imageStream = activity.getContentResolver().openInputStream(imageUri);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        String encodedImage = encodeImage(selectedImage);
-                        int id = Integer.parseInt(localStorage.getString(getString(R.string.id_user), ""));
-                        ChangePicture data = new ChangePicture(id, encodedImage);
-
-                        Call<Integer> call = ApiAdapter.getApiService().changePicture(data);
-                        call.enqueue(new Callback<Integer>()
-                        {
-                            @Override
-                            public void onResponse(Call<Integer> call, Response<Integer> response)
-                            {
-                                if (response.isSuccessful())
-                                {
-                                    Log.d(TAG, "El perfil ha sido actualizado");
-                                    activity.navigateTo(activity.mainFragments.get(0));
-                                } else
-                                {
-                                    Log.d(TAG, "No se puedo actualizar el usuario con id: " + id);
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Integer> call, Throwable t)
-                            {
-
-                            }
-                        });
-                    }
-                }
+                openCamera();
             }
         });
     }
@@ -152,6 +102,38 @@ public class ChangePictureFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void openCamera()
+    {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePictureIntent.resolveActivity(activity.getPackageManager())!= null)
+        {
+            File photoFile = null;
+            try
+            {
+                photoFile = createImageFile();
+            } catch(IOException exception)
+            {
+
+            }
+
+            if(photoFile != null)
+            {
+                ContentValues values = new ContentValues();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+                String date = dateFormat.format(new Date());
+                String imgTitle = "Picture" + date + ".jpg";
+
+                values.put(MediaStore.Images.Media.TITLE, imgTitle);
+                values.put(MediaStore.Images.Media.DESCRIPTION, "Photo taken on " + System.currentTimeMillis());
+                imageUri = activity.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PHOTO);
+                updateImageView();
+            }
+        }
     }
 
     private File createImageFile() throws IOException
@@ -167,6 +149,14 @@ public class ChangePictureFragment extends Fragment {
         return image;
     }
 
+    private void updateImageView()
+    {
+        Glide
+                .with(context)
+                .load(new File(imageUri.getPath()))
+                .into(ivImg);
+    }
+
     private String encodeImage(Bitmap bm)
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -174,5 +164,73 @@ public class ChangePictureFragment extends Fragment {
         byte[] b = baos.toByteArray();
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
         return encImage;
+    }
+
+    private void saveChanges()
+    {
+        int id = Integer.parseInt(localStorage.getString(getString(R.string.id_user), ""));
+        ChangePicture data = new ChangePicture(id, pfp);
+
+        Call<Integer> call = ApiAdapter.getApiService().changePicture(data);
+        call.enqueue(new Callback<Integer>()
+        {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response)
+            {
+                if (response.isSuccessful())
+                {
+                    Log.d(TAG, "El perfil ha sido actualizado");
+                    activity.navigateTo(activity.mainFragments.get(0));
+                } else
+                {
+                    Log.d(TAG, "No se puedo actualizar el usuario con id: " + id);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t)
+            {
+
+            }
+        });
+    }
+
+    private void checkExternalStoragePermission()
+    {
+        if(ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            {
+
+            } else
+            {
+                ActivityCompat.requestPermissions(activity, new String[]
+                        {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+            }
+        }
+
+        if(ContextCompat.checkSelfPermission(context,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    Manifest.permission.CAMERA))
+            {
+
+            } else
+            {
+                ActivityCompat.requestPermissions(activity, new String[]
+                        {Manifest.permission.CAMERA}, 226);
+            }
+        }
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
+        {
+            if(activity.checkSelfPermission(Manifest.permission.CAMERA) !=  PackageManager.PERMISSION_GRANTED)
+            {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+            }
+        }
     }
 }
