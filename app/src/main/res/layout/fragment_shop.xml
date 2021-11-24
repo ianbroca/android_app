@@ -13,9 +13,6 @@
         android:layout_height="55dp"
         app:menu="@menu/top_menu"
         />-->
-
-
-
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +20,10 @@
         app:tabMode="scrollable"
         android:isScrollContainer="true"
         app:tabSelectedTextColor="@color/bottom_nav_color"
-        app:tabIndicatorColor="@color/bottom_nav_color" />
+        app:tabIndicatorColor="@color/bottom_nav_color"
+        app:tabTextAppearance="@style/MineCustomTabText"
+        android:paddingTop="20dp"
+        android:layout_marginBottom="@dimen/cardview_default_elevation"/>
     <TextView
         android:id="@+id/tvCat1"
         android:layout_width="match_parent"

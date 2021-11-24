@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
@@ -92,8 +93,11 @@ public class ShopFragment extends Fragment
         tabs.addTab(tabs.newTab().setText("Smartphones"));
         tabs.addTab(tabs.newTab().setText("Tablets"));
         tabs.addTab(tabs.newTab().setText("Consolas"));
-
         productsOntabSelected();
+        if (tabs.getSelectedTabPosition() == 0)
+        {
+            Toast.makeText(context, "En proceso de implementacion", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
@@ -118,7 +122,6 @@ public class ShopFragment extends Fragment
                     case 0:
                         tvCategoria1.setText("");
                         tvCategoria2.setText("");
-
 
 
                         Product[] top = new Product[0];
@@ -155,7 +158,8 @@ public class ShopFragment extends Fragment
                             @Override
                             public void onFailure(Call<Product[]> call, Throwable t)
                             {
-                                Log.e(TAG, "onFailure: call de Smartphones", t);
+                                Log.e(TAG, "onFailure: call de Videogames", t);
+                                Toast.makeText(context, "Hubo un error al cargar los datos reinicie la aplicaion", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -188,6 +192,7 @@ public class ShopFragment extends Fragment
                             public void onFailure(Call<Product[]> call, Throwable t)
                             {
                                 Log.e(TAG, "onFailure: call de Smartphones", t);
+                                Toast.makeText(context, "Hubo un error al cargar los datos reinicie la aplicaion", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -217,7 +222,8 @@ public class ShopFragment extends Fragment
                             @Override
                             public void onFailure(Call<Product[]> call, Throwable t)
                             {
-                                Log.e(TAG, "onFailure: call de Smartphones", t);
+                                Log.e(TAG, "onFailure: call de Tablets", t);
+                                Toast.makeText(context, "Hubo un error al cargar los datos reinicie la aplicaion", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -249,7 +255,8 @@ public class ShopFragment extends Fragment
                             @Override
                             public void onFailure(Call<Product[]> call, Throwable t)
                             {
-                                Log.e(TAG, "onFailure: call de Smartphones", t);
+                                Log.e(TAG, "onFailure: call de Consoles", t);
+                                Toast.makeText(context, "Hubo un error al cargar los datos reinicie la aplicaion", Toast.LENGTH_SHORT).show();
                             }
                         });
 

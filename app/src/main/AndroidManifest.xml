@@ -31,7 +31,7 @@
         <meta-data android:name="com.google.android.gms.version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD1rsx64AzWs9Vn3apuH_z4osdegYfL8IQ" />
+            android:value="AIzaSyBW-I2egXFyyS_I_DY4PKRNR5iO9nfCaHk" />
 
         <uses-library
             android:name="org.apache.http.legacy"

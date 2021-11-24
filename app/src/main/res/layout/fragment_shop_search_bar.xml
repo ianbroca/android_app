@@ -7,16 +7,23 @@
     tools:context=".mainFragments.ShopFragment.SearchBarFragment" >
 
     <SearchView
+        android:layout_gravity="center"
         android:id="@+id/searchBar"
         android:layout_width="300dp"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/cardview_default_elevation"
+        android:queryHint="Search"
+        android:iconifiedByDefault="false"/>
 
     <ImageButton
+        android:layout_gravity="center"
         android:id="@+id/btnProfile"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_person_circle_outline"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        android:background="@drawable/ic_person_circle_outline"/>
 
     <!--    <ImageButton-->
 <!--        android:id="@+id/btnProfile"-->

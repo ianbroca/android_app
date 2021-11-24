@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:paddingTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:paddingRight="20dp"
+                android:src="@drawable/alminame">
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Funciona la vista de productos">
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="50dp"
+            android:paddingBottom="30dp"
+            android:orientation="vertical">
+            <TextView
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="399,90€"
+                android:textStyle="bold"
+                android:textColor="@color/danger_red">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="quedan x inidades">
+            </TextView>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/primary"
+            android:text="AÑADIR A LA CESTA"
+            tools:ignore="TouchTargetSizeCheck"></Button>
+        <LinearLayout
+            android:paddingTop="30dp"
+            android:paddingLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Caracteristícas"
+                android:textSize="18sp"
+                android:textStyle="bold">
+            </TextView>
+
+            <ListView
+                android:id="@+id/lvproducData"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+            </ListView>
+        </LinearLayout>
+
+        <TextView
+            android:paddingLeft="25dp"
+            android:id="@+id/tvGaleria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Imagenes de producto"
+            android:textSize="18sp"
+            android:textStyle="bold">
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:paddingLeft="25dp"
+            android:id="@+id/rvProducts2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            tools:listitem="@layout/recycler_view_item_1">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+
+    </LinearLayout>
+</ScrollView>

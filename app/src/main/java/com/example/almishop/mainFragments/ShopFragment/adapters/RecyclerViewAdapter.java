@@ -10,10 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.almishop.R;
+import com.example.almishop.mainFragments.BackHomeFragment;
+import com.example.almishop.mainFragments.ShopFragment.ProductFragment;
 import com.example.almishop.model.Product;
 import com.example.almishop.model.Smartphone;
 
@@ -74,7 +78,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view)
             {
-                Log.d(TAG, "onClick: clicked on an image: " + products[holder.getAdapterPosition()].getName());
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Fragment productFragment = new ProductFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, productFragment).addToBackStack(null).commit();
+
+                Fragment backHome = new BackHomeFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentSearchBarView, backHome).addToBackStack(null).commit();
+
             }
         });
     }
