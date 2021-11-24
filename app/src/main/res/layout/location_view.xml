@@ -9,10 +9,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:gravity="center"
         android:layout_weight="0"
-        android:text="Encuentra Almishop!"
+        android:gravity="center"
         android:justificationMode="inter_word"
+        android:text="¡Encuentra Almishop!"
         android:textSize="30sp"
         android:textStyle="bold" />
      <TextView

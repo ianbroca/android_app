@@ -107,54 +107,21 @@ public class ChangePictureFragment extends Fragment {
     private void openCamera()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(takePictureIntent.resolveActivity(activity.getPackageManager())!= null)
-        {
-            File photoFile = null;
-            try
-            {
-                photoFile = createImageFile();
-            } catch(IOException exception)
-            {
+        startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PHOTO);
+    }
 
-            }
-
-            if(photoFile != null)
-            {
-                ContentValues values = new ContentValues();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-                String date = dateFormat.format(new Date());
-                String imgTitle = "Picture" + date + ".jpg";
-
-                values.put(MediaStore.Images.Media.TITLE, imgTitle);
-                values.put(MediaStore.Images.Media.DESCRIPTION, "Photo taken on " + System.currentTimeMillis());
-                imageUri = activity.getContentResolver().insert(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PHOTO);
-                updateImageView();
-            }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            ivImg.setImageBitmap(photo);
+            Glide
+                    .with(context)
+                    .load(photo)
+                    .into(ivImg);
         }
-    }
-
-    private File createImageFile() throws IOException
-    {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
-        return image;
-    }
-
-    private void updateImageView()
-    {
-        Glide
-                .with(context)
-                .load(new File(imageUri.getPath()))
-                .into(ivImg);
     }
 
     private String encodeImage(Bitmap bm)

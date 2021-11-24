@@ -62,7 +62,7 @@ public class LocationFragment extends Fragment {
             {
                 googleMap = mMap;
                 LatLng almi = new LatLng(43.27173495557362, -2.948777025177847);
-                googleMap.addMarker(new MarkerOptions().position(almi).title("Almishop, En donde se compran los sueños!").icon(BitmapDescriptorFactory
+                googleMap.addMarker(new MarkerOptions().position(almi).title("Almishop, donde se compran los sueños").icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                 // For zooming automatically
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(almi).zoom(12).build();
