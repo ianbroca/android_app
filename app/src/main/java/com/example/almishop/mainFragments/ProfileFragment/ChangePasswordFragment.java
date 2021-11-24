@@ -64,8 +64,6 @@ public class ChangePasswordFragment extends DialogFragment {
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
 
-        activity.getLocation();
-
         btnCloseRegister = getView().findViewById(R.id.btnCloseRegister);
         btnChangePassword = getView().findViewById(R.id.btnChangePassword);
         etOldPassword = getView().findViewById(R.id.etOldPassword);
