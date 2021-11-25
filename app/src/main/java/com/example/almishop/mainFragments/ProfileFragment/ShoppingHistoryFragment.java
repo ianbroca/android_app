@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,6 +43,7 @@ public class ShoppingHistoryFragment extends DialogFragment {
     private ImageView btnCloseHistory;
 
     private ListView listView;
+    private ArrayList<HistoryTransaction> listElements;
 
     public ShoppingHistoryFragment() { super(); }
 
@@ -78,11 +80,30 @@ public class ShoppingHistoryFragment extends DialogFragment {
             }
         });
 
-        ArrayList<HistoryTransaction> listElements = new ArrayList<HistoryTransaction>();
-        //llamada
-        HistoryListAdapter adapter = new HistoryListAdapter(getContext(), listElements);
-        listView = view.findViewById(R.id.listView);
-        listView.setAdapter(adapter);
+        listElements = new ArrayList<HistoryTransaction>();
+        String id = localStorage.getString(getString(R.string.id_user), "");
+        Call<ArrayList<HistoryTransaction>> call = ApiAdapter.getApiService().getShoppingHistory(id);
+        call.enqueue(new Callback<ArrayList<HistoryTransaction>>() {
+            @Override
+            public void onResponse(Call<ArrayList<HistoryTransaction>> call, Response<ArrayList<HistoryTransaction>> response) {
+                listElements = response.body();
+                HistoryListAdapter adapter = new HistoryListAdapter(context, listElements);
+                listView = view.findViewById(R.id.HitoryListView);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<HistoryTransaction>> call, Throwable t) {
+
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                
+            }
+        });
     }
 
     @Override

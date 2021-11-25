@@ -72,5 +72,5 @@ public interface ApiService
     Call<Smartphone> getSmartphoneById(@Path("id") String id);
 
     @GET("transaction/{id}")
-    Call<HistoryTransaction> getShoppingHistory(@Path("id") String id);
+    Call<ArrayList<HistoryTransaction>> getShoppingHistory(@Path("id") String id);
 }
