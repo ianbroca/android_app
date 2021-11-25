@@ -6,6 +6,7 @@ import com.example.almishop.model.ChangePassword;
 import com.example.almishop.model.ChangePicture;
 import com.example.almishop.model.ChangeProfile;
 import com.example.almishop.model.Console;
+import com.example.almishop.model.HistoryTransaction;
 import com.example.almishop.model.Location;
 import com.example.almishop.model.Login;
 import com.example.almishop.model.Product;
@@ -81,4 +82,6 @@ public interface ApiService
     @GET("product/tablets/{id}")
     Call<Tablet> getTabletsById(@Path("id") String id);
 
+    @GET("transaction/{id}")
+    Call<HistoryTransaction> getShoppingHistory(@Path("id") String id);
 }

@@ -1,5 +1,6 @@
 package com.example.almishop.mainFragments.ProfileFragment;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -68,6 +69,8 @@ public class RegisterFragment extends Fragment
         localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         btnClose = view.findViewById(R.id.btnCloseRegister);
         etEmail = view.findViewById(R.id.etRegisterEmail);
@@ -149,7 +152,7 @@ public class RegisterFragment extends Fragment
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             try {
-                                if (response.isSuccessful())
+                                if (response.isSuccessful() && !response.body().equals("Ese email ya está en uso."))
                                 {
                                     User user = response.body();
                                     Log.d(TAG, "Register successful: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
@@ -158,11 +161,32 @@ public class RegisterFragment extends Fragment
 //                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
 //                                    profileDialogFragment.dismiss();
 //                                    dismiss();
-                                } else
-                                {
+                                } else if (response.body().equals("Ese email ya está en uso.")) {
+                                    builder.setTitle("Error al registrarse");
+                                    builder.setMessage("Ese email ya está en uso.");
+                                    builder.setPositiveButton("Aceptar", null);
+
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+
+                                    Log.d(TAG, "Register KO - email already in use");
+                                } else {
+                                    builder.setTitle("Error al registrarse");
+                                    builder.setMessage("Por favor, inténtelo más tarde.");
+                                    builder.setPositiveButton("Aceptar", null);
+
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+
                                     Log.d(TAG, "Register failed. Username: " + email + " Password: " + password);
                                 }
                             } catch (Exception ex) {
+                                builder.setTitle("Error de servidor interno");
+                                builder.setMessage("Por favor, inténtelo más tarde.");
+                                builder.setPositiveButton("Aceptar", null);
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
                                 Log.d(TAG, "REGISTER ERROR");
                             }
                         }
@@ -173,11 +197,29 @@ public class RegisterFragment extends Fragment
                         }
                     });
                 } else if (!password.equals(repassword)) {
+                    builder.setTitle("Error al registrarse");
+                    builder.setMessage("Las contraseñas no coinciden.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.d(TAG, "onClick: Las contraseñas no coinciden");
                     // DIALOGO DE ERROR PORQUE ERES GILIPOLLAS
                 } else if (finder) {
+                    builder.setTitle("Error al registrarse");
+                    builder.setMessage("La contraseña no debe contener carácteres especiales.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.e(TAG, "onClick: Contraseña con carácteres especiales.");
                 } else {
+                    builder.setTitle("Error al registrarse");
+                    builder.setMessage("Hay campos vacíos, por favor rellénelos.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.e(TAG, "onClick: Campos vacíos");
                 }
             }
