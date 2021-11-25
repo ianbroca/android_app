@@ -21,6 +21,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.mainFragments.AboutUsFragment;
+import com.example.almishop.mainFragments.ProfileFragment.ShoppingHistoryFragment;
 import com.example.almishop.mainFragments.ShopFragment.BackHomeFragment;
 import com.example.almishop.mainFragments.GalleryFragment;
 import com.example.almishop.mainFragments.LocationFragment;
@@ -55,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
     public ChangeProfileFragment changeProfileFragment;
     public ChangePictureFragment changePictureFragment;
     public ChangePasswordFragment changePasswordFragment;
-    public  ProductFragment productFragment;
-    public  BackHomeFragment backHomeFragment;
+    public ProductFragment productFragment;
+    public BackHomeFragment backHomeFragment;
+    public ShoppingHistoryFragment shoppingHistoryFragment;
     int selectedIndex = 0;
 
     private static String TAG = "MAIN ACTIVITY";
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         changePasswordFragment = new ChangePasswordFragment();
         backHomeFragment = new BackHomeFragment();
         productFragment = new ProductFragment();
+        shoppingHistoryFragment = new ShoppingHistoryFragment();
 
         searchBar = findViewById(R.id.fragmentSearchBarView);
         content = findViewById(R.id.fragmentContainerView);

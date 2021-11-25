@@ -165,7 +165,9 @@ public class ProfileDialogFragment extends DialogFragment
                     switch (i)
                     {
                         case 0: // Navegar a historial de compras
-                            Log.d(TAG, "onItemClick: Navigate to buy history");
+                            Log.d(TAG, "onItemClick: Navigate to shopping history fragment");
+                            activity.navigateTo(activity.shoppingHistoryFragment);
+                            dismiss();
                             break;
                         case 1: // Navegar a información personal
                             Log.d(TAG, "onItemClick: Navigate to personal info");
