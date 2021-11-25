@@ -22,10 +22,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         android:text="Cambiar foto de perfil"
         android:textAlignment="viewStart"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnCloseRegister"
@@ -45,8 +45,8 @@
 
     <ImageView
         android:id="@+id/ivCameraImg"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCamera"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/ic_person_circle_outline" />
 
     <Button
         android:id="@+id/btnChangePicture"

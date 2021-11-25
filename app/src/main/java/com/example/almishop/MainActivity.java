@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public LinearLayout searchBar, content;
     private SharedPreferences localStorage;
     private SharedPreferences.Editor localStorageEditor;
-    BottomNavigationView menu;
+    private BottomNavigationView menu;
     public ArrayList<Fragment> mainFragments;
     public RegisterFragment registerFragment;
     public ChangeProfileFragment changeProfileFragment;
@@ -177,13 +178,12 @@ public class MainActivity extends AppCompatActivity {
         LayoutParams params = searchBar.getLayoutParams();
         if (value)
         {
-            params.height = params.WRAP_CONTENT;
-            searchBar.setLayoutParams(params);
+            params.height = LayoutParams.WRAP_CONTENT;
         } else
         {
             params.height = 0;
-            searchBar.setLayoutParams(params);
         }
+        searchBar.setLayoutParams(params);
     }
 
     public void toggleMenu(boolean value)
@@ -192,12 +192,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("TAG", "toggleMenu: " + params.height);
         if (value)
         {
-            params.height = params.WRAP_CONTENT;
-            menu.setLayoutParams(params);
+            menu.setVisibility(View.VISIBLE);
         } else
         {
-            params.height = 0;
-            menu.setLayoutParams(params);
+            menu.setVisibility(View.GONE);
         }
     }
 
