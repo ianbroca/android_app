@@ -83,5 +83,5 @@ public interface ApiService
     Call<Tablet> getTabletsById(@Path("id") String id);
 
     @GET("transaction/{id}")
-    Call<HistoryTransaction> getShoppingHistory(@Path("id") String id);
+    Call<ArrayList<HistoryTransaction>> getShoppingHistory(@Path("id") String id);
 }

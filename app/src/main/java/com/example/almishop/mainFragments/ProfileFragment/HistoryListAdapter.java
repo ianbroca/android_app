@@ -2,6 +2,7 @@ package com.example.almishop.mainFragments.ProfileFragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +47,12 @@ public class HistoryListAdapter extends BaseAdapter
     public View getView(int i, View view, ViewGroup viewGroup)
     {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        View row = inflater.inflate(R.layout.adapter_list, null);
+        View row = inflater.inflate(R.layout.adapter_history_list, null);
 
         TextView orderNumber = row.findViewById(R.id.tvOrderNumber);
         TextView orderDate = row.findViewById(R.id.tvOrderDate);
-        orderNumber.setText(listElements.get(i).getId());
-        orderDate.setText(listElements.get(i).getDate());
+        orderNumber.setText("Número de pedido: " + listElements.get(i).getId());
+        orderDate.setText("Fecha: " + listElements.get(i).getDate());
 
         return row;
     }
