@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:paddingTop="10dp"
         android:id="@+id/fragmentSearchBarView"
         android:name="com.example.almishop.mainFragments.ShopFragment.ShopFragment"
         android:layout_width="0dp"

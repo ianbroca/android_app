@@ -44,9 +44,7 @@ public class ShopFragment extends Fragment
 
     private TabLayout tabs = null;
     private Context context;
-    private TextView tvCategoria1 = null;
-    private TextView tvCategoria2 = null;
-    private ProgressBar pgsBar = null;
+
 
 
     public ShopFragment()
@@ -80,20 +78,45 @@ public class ShopFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "initRecyclerView: init recyclerview");
 
-        tvCategoria1= view.findViewById(R.id.tvCat1);
-        tvCategoria1.setText("");
-        tvCategoria2= view.findViewById(R.id.tvCat2);
-        tvCategoria2.setText("");
 
         tabs = view.findViewById(R.id.tlProducts);
 
-        pgsBar = (ProgressBar)view.findViewById(R.id.pBar);
 
-        tabs.addTab(tabs.newTab().setText("Top"));
         tabs.addTab(tabs.newTab().setText("Videojuegos"));
         tabs.addTab(tabs.newTab().setText("Smartphones"));
         tabs.addTab(tabs.newTab().setText("Tablets"));
         tabs.addTab(tabs.newTab().setText("Consolas"));
+
+        if (tabs.getSelectedTabPosition() == 0)
+        {
+            Call<Product[]> call1 = ApiAdapter.getApiService().getVideogames();
+
+            call1.enqueue(new Callback<Product[]>()
+            {
+                @Override
+                public void onResponse(Call<Product[]> call, Response<Product[]> response)
+                {
+                    if (response.isSuccessful())
+                    {
+
+                        Product[] videogames = new Videogame[response.body().length];
+
+                        videogames = response.body();
+
+                        addtoRecycler(videogames);
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Product[]> call, Throwable t)
+                {
+                    Log.e(TAG, "onFailure: call de Videogames", t);
+                    Toast.makeText(context, "Hubo un error al cargar los datos reinicie la aplicaion", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
         productsOntabSelected();
     }
 
@@ -114,17 +137,8 @@ public class ShopFragment extends Fragment
                 Log.d(TAG, "onTabSelected: " + tabs.getSelectedTabPosition());
                 switch (tab.parent.getSelectedTabPosition())
                 {
+
                     case 0:
-                        tvCategoria1.setText("");
-                        tvCategoria2.setText("");
-
-
-                        Product[] top = new Product[0];
-                        addtoRecycler(top);
-                        addtoRecycler2(top);
-
-                        break;
-                    case 1:
 
 
                         Call<Product[]> call1 = ApiAdapter.getApiService().getVideogames();
@@ -136,8 +150,6 @@ public class ShopFragment extends Fragment
                             {
                                 if (response.isSuccessful())
                                 {
-                                    tvCategoria1.setText("RPG");
-                                    tvCategoria2.setText("Plataformas");
 
                                     Product[] videogames = new Videogame[response.body().length];
 
@@ -145,7 +157,6 @@ public class ShopFragment extends Fragment
 
                                     addtoRecycler(videogames);
 
-                                    addtoRecycler2(videogames);
 
                                 }
                             }
@@ -159,7 +170,7 @@ public class ShopFragment extends Fragment
                         });
 
                         break;
-                    case 2:
+                    case 1:
 
                         Call<Product[]> call2 = ApiAdapter.getApiService().getSmartphones();
 
@@ -170,8 +181,6 @@ public class ShopFragment extends Fragment
                             {
                                 if (response.isSuccessful())
                                 {
-                                    tvCategoria1.setText("Móviles Xiaomi");
-                                    tvCategoria2.setText("Móviles Samsung");
 
                                     Product[] smartphones = new Smartphone[response.body().length];
 
@@ -179,7 +188,6 @@ public class ShopFragment extends Fragment
 
                                     addtoRecycler(smartphones);
 
-                                    addtoRecycler2(smartphones);
                                 }
                             }
 
@@ -192,7 +200,7 @@ public class ShopFragment extends Fragment
                         });
 
                         break;
-                    case 3:
+                    case 2:
                         Call<Product[]> call3 = ApiAdapter.getApiService().getTablets();
 
                         call3.enqueue(new Callback<Product[]>()
@@ -202,15 +210,13 @@ public class ShopFragment extends Fragment
                             {
                                 if (response.isSuccessful())
                                 {
-                                    tvCategoria1.setText("Tablets Wortex");
-                                    tvCategoria2.setText("Tablets Sony");
+
                                     Product[] tablets = new Tablet[response.body().length];
 
                                     tablets = response.body();
 
                                     addtoRecycler(tablets);
 
-                                    addtoRecycler2(tablets);
                                 }
                             }
 
@@ -223,7 +229,7 @@ public class ShopFragment extends Fragment
                         });
 
                         break;
-                    case 4:
+                    case 3:
                         Call<Product[]> call4 = ApiAdapter.getApiService().getConsoles();
 
                         call4.enqueue(new Callback<Product[]>()
@@ -233,16 +239,13 @@ public class ShopFragment extends Fragment
                             {
                                 if (response.isSuccessful())
                                 {
-                                    tvCategoria1.setText("Nintendo");
-                                    tvCategoria2.setText("Play Station 4");
+
 
                                     Product[] consoles = new Console[response.body().length];
 
                                     consoles = response.body();
 
                                     addtoRecycler(consoles);
-
-                                    addtoRecycler2(consoles);
 
                                 }
                             }
@@ -285,21 +288,6 @@ public class ShopFragment extends Fragment
         recyclerView.setLayoutManager(layoutManager);
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context, (MainActivity) getActivity() );
-
-
-        recyclerView.setAdapter(adapter);
-
-    }
-    private void addtoRecycler2(Product[] data)
-    {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-
-        RecyclerView recyclerView = getView().findViewById(R.id.rvProducts2);
-
-        recyclerView.setLayoutManager(layoutManager);
-
-
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context , (MainActivity) getActivity());
 
 
         recyclerView.setAdapter(adapter);

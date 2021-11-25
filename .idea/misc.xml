@@ -38,6 +38,28 @@
         <entry key="..\:/Users/pc/StudioProjects/AlmiShop/app/src/main/res/layout/fragment_shop.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pc/StudioProjects/AlmiShop/app/src/main/res/layout/fragment_shop_search_bar.xml" value="0.2741477272727273" />
         <entry key="..\:/Users/pc/StudioProjects/AlmiShop/app/src/main/res/menu/bottom_menu.xml" value="0.36666666666666664" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/adapter_list.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_about_us.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_back_home.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_change_picture.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_change_profile.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_dialog_login.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/fragment_dialog_logreg.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_dialog_profile.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_location.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_product.xml" value="0.2427536231884058" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_shop.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_shop_search_bar.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/grid_gallery_image.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/location_view.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/product_data_view.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/product_view.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/recycler_view_item.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/recycler_view_item_1.xml" value="0.2171875" />
       </map>
     </option>
   </component>

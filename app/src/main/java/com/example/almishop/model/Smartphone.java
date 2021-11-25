@@ -11,16 +11,18 @@ public class Smartphone extends Product implements Serializable
     private String battery;
     private String has_sd;
     private String color;
+    private String camera;
 
     public Smartphone()
     {
 
     }
 
-    public Smartphone(String id, String id_product_type, String name, String price, String stock_sale, String id_brand, String cover, String[] images, String discount, String priceDiscounted, String storage, String ram, String inches, String battery, String has_sd, String color)
+    public Smartphone(String id, String id_product_type, String name, String price, String stock_sale, String camera, String id_brand, String cover, String[] images, String discount, String priceDiscounted, String storage, String ram, String inches, String battery, String has_sd, String color)
     {
         super(id,id_product_type, name, price, stock_sale, id_brand, cover, images, discount, priceDiscounted);
         this.storage = storage;
+        this.camera = camera;
         this.ram = ram;
         this.inches = inches;
         this.battery = battery;
@@ -83,8 +85,19 @@ public class Smartphone extends Product implements Serializable
         return color;
     }
 
+    public String getCamera()
+    {
+        return camera;
+    }
+
+    public void setCamera(String camera)
+    {
+        this.camera = camera;
+    }
+
     public void setColor(String color)
     {
         this.color = color;
     }
+
 }

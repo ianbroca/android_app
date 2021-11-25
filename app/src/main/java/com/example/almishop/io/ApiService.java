@@ -5,6 +5,7 @@ import androidx.annotation.AnyRes;
 import com.example.almishop.model.ChangePassword;
 import com.example.almishop.model.ChangePicture;
 import com.example.almishop.model.ChangeProfile;
+import com.example.almishop.model.Console;
 import com.example.almishop.model.Location;
 import com.example.almishop.model.Login;
 import com.example.almishop.model.Product;
@@ -12,6 +13,7 @@ import com.example.almishop.model.Register;
 import com.example.almishop.model.Smartphone;
 import com.example.almishop.model.Tablet;
 import com.example.almishop.model.User;
+import com.example.almishop.model.Videogame;
 
 import java.util.ArrayList;
 
@@ -69,5 +71,14 @@ public interface ApiService
 
     @GET("product/smartphones/{id}")
     Call<Smartphone> getSmartphoneById(@Path("id") String id);
+
+    @GET("product/videogames/{id}")
+    Call<Videogame> getVideogamesById(@Path("id") String id);
+
+    @GET("product/consoles/{id}")
+    Call<Console> getConsolesById(@Path("id") String id);
+
+    @GET("product/tablets/{id}")
+    Call<Tablet> getTabletsById(@Path("id") String id);
 
 }

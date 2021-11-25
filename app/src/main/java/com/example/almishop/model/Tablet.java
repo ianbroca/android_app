@@ -8,16 +8,18 @@ public class Tablet extends Product
     private String battery;
     private String has_sd;
     private String color;
+    private String camera;
 
     public Tablet()
     {
     }
 
-    public Tablet(String id, String id_product_type, String name, String price, String stock_sale, String id_brand, String cover, String[] images, String discount, String priceDiscounted, String storage, String ram, String inches, String battery, String has_sd, String color)
+    public Tablet(String id, String id_product_type, String name, String price, String camera, String stock_sale, String id_brand, String cover, String[] images, String discount, String priceDiscounted, String storage, String ram, String inches, String battery, String has_sd, String color)
     {
         super(id, id_product_type, name, price, stock_sale, id_brand, cover, images, discount, priceDiscounted);
         this.storage = storage;
         this.ram = ram;
+        this.camera = camera;
         this.inches = inches;
         this.battery = battery;
         this.has_sd = has_sd;
@@ -82,5 +84,15 @@ public class Tablet extends Product
     public void setColor(String color)
     {
         this.color = color;
+    }
+
+    public String getCamera()
+    {
+        return camera;
+    }
+
+    public void setCamera(String camera)
+    {
+        this.camera = camera;
     }
 }

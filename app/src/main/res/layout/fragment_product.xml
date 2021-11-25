@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="180dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -83,7 +83,8 @@
             android:layout_gravity="center"
             android:backgroundTint="@color/primary"
             android:text="AÑADIR A LA CESTA"
-            tools:ignore="TouchTargetSizeCheck"></Button>
+            tools:ignore="TouchTargetSizeCheck">
+        </Button>
         <LinearLayout
             android:paddingTop="30dp"
             android:paddingLeft="10dp"
@@ -96,21 +97,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Caracteristícas"
-                android:textSize="15sp"
+                android:textSize="18sp"
                 android:textStyle="bold">
             </TextView>
 
             <ListView
                 android:id="@+id/lvproducData"
                 android:layout_width="match_parent"
-                android:layout_height="260dp">
+                android:layout_height="290dp">
 
             </ListView>
         </LinearLayout>
 
         <TextView
+            android:paddingTop="30dp"
             android:paddingLeft="15dp"
-            android:paddingBottom="40dp"
+            android:paddingBottom="30dp"
             android:id="@+id/tvGaleria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
