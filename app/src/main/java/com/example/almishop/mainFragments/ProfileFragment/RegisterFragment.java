@@ -152,7 +152,7 @@ public class RegisterFragment extends Fragment
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             try {
-                                if (response.isSuccessful())
+                                if (response.isSuccessful() && !response.body().equals("Ese email ya está en uso."))
                                 {
                                     User user = response.body();
                                     Log.d(TAG, "Register successful: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
@@ -161,8 +161,16 @@ public class RegisterFragment extends Fragment
 //                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
 //                                    profileDialogFragment.dismiss();
 //                                    dismiss();
-                                } else
-                                {
+                                } else if (response.body().equals("Ese email ya está en uso.")) {
+                                    builder.setTitle("Error al registrarse");
+                                    builder.setMessage("Ese email ya está en uso.");
+                                    builder.setPositiveButton("Aceptar", null);
+
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+
+                                    Log.d(TAG, "Register KO - email already in use");
+                                } else {
                                     builder.setTitle("Error al registrarse");
                                     builder.setMessage("Por favor, inténtelo más tarde.");
                                     builder.setPositiveButton("Aceptar", null);
