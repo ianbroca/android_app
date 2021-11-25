@@ -1,11 +1,13 @@
 package com.example.almishop.mainFragments.ShopFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.almishop.MainActivity;
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.mainFragments.ShopFragment.adapters.ProductDataAdapter;
@@ -42,6 +45,7 @@ public class ProductFragment extends Fragment
     private TextView tvPrice;
     private TextView tvStock_sale;
     private ImageView ivCover;
+    private ImageButton btnBack = null;
 
 
     public ProductFragment()
@@ -83,6 +87,18 @@ public class ProductFragment extends Fragment
         tvStock_sale = view.findViewById(R.id.tvStock_sale);
 
         tvName = view.findViewById(R.id.tvName);
+
+        btnBack = view.findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                MainActivity activity = (MainActivity) getActivity();
+                activity.navigateTo(activity.mainFragments.get(0));
+            }
+        });
 
         String [] images = new String[2];
 

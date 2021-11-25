@@ -5,8 +5,8 @@
     android:padding="15dp"
     android:orientation="vertical"
     >
+        <!--android:id="@+id/btnBack"-->
         <ImageButton
-            android:id="@+id/btnBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/ic_arrow_back_outline"
