@@ -110,39 +110,43 @@ public class LoginDialogFragment extends DialogFragment
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
                 Login data = new Login(email, password);
-                Call<User> call = ApiAdapter.getApiService().login(data);
-                call.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        try {
-                            if (response.isSuccessful())
-                            {
-                                User user = response.body();
-                                if (user.getId() != 0)
+                if (!email.trim().equals("") && !password.equals("")) {
+                    Call<User> call = ApiAdapter.getApiService().login(data);
+                    call.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            try {
+                                if (response.isSuccessful())
                                 {
-                                    Log.d(TAG, "Login successful: " + user.getId() + " " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
-                                    localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
-                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
-                                    profileDialogFragment.dismiss();
-                                    dismiss();
+                                    User user = response.body();
+                                    if (user.getId() != 0)
+                                    {
+                                        Log.d(TAG, "login OK!: " + user.getId() + " " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
+                                        localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
+                                        ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
+                                        profileDialogFragment.dismiss();
+                                        dismiss();
+                                    } else
+                                    {
+                                        Log.d(TAG, "login KO - El correo y contraseña introducidos no coinciden.");
+                                    }
                                 } else
                                 {
-                                    Log.d(TAG, "El correo y contraseña introducidos no coinciden.");
+                                    Log.d(TAG, "KO - Username: " + email + " Password: " + password);
                                 }
-                            } else
-                            {
-                                Log.d(TAG, "Login failed. Username: " + email + " Password: " + password);
+                            } catch (Exception ex) {
+                                Log.d(TAG, "LOGIN ERROR" + ex);
                             }
-                        } catch (Exception ex) {
-                            Log.d(TAG, "LOGIN ERROR");
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    Log.e(TAG, "login onClick: KO - empty fields");
+                }
             }
         });
         super.onViewCreated(view, savedInstanceState);
