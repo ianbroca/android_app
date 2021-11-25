@@ -5,6 +5,7 @@ import androidx.annotation.AnyRes;
 import com.example.almishop.model.ChangePassword;
 import com.example.almishop.model.ChangePicture;
 import com.example.almishop.model.ChangeProfile;
+import com.example.almishop.model.HistoryTransaction;
 import com.example.almishop.model.Location;
 import com.example.almishop.model.Login;
 import com.example.almishop.model.Product;
@@ -70,4 +71,6 @@ public interface ApiService
     @GET("product/smartphones/{id}")
     Call<Smartphone> getSmartphoneById(@Path("id") String id);
 
+    @GET("transaction/{id}")
+    Call<HistoryTransaction> getShoppingHistory(@Path("id") String id);
 }
