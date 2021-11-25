@@ -168,7 +168,7 @@ public class ChangeProfileFragment extends Fragment
                 ChangeProfile data = new ChangeProfile(id, name, surname1, surname2, birthdate);
 
                 Log.d(TAG, "DATA: " + name + " " + surname1 + " " + surname2 + " " + birthdate);
-                if (!name.trim().equals("") && !surname1.trim().equals("") && !surname2.trim().equals("") && !birthdate.equals("")) {
+                if (!name.trim().equals("") && !surname1.trim().equals("") && !birthdate.equals("")) {
                     Call<Integer> call = ApiAdapter.getApiService().changeProfile(data);
                     call.enqueue(new Callback<Integer>() {
                         @Override
