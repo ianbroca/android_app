@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,14 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.almishop.MainActivity;
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
-import com.example.almishop.mainFragments.BackHomeFragment;
 import com.example.almishop.mainFragments.ShopFragment.adapters.ProductDataAdapter;
 import com.example.almishop.mainFragments.ShopFragment.adapters.RVGaleriaAdapter;
-import com.example.almishop.mainFragments.ShopFragment.adapters.RecyclerViewAdapter;
-import com.example.almishop.model.Product;
 import com.example.almishop.model.Smartphone;
 
 import java.util.ArrayList;
@@ -83,6 +78,11 @@ public class ProductFragment extends Fragment
 
         ivCover = view.findViewById(R.id.ivProduct);
 
+        tvPrice = view.findViewById(R.id.tvPrice);
+
+        tvStock_sale = view.findViewById(R.id.tvStock_sale);
+
+        tvName = view.findViewById(R.id.tvName);
 
         String [] images = new String[2];
 
@@ -130,12 +130,32 @@ public class ProductFragment extends Fragment
                     characteristics.add("Pulgadas: " + smartphone.getInches() + "`");
                     characteristics.add("Bateria: " + smartphone.getBattery() + "mAh");
                     characteristics.add("SD: " + sd );
+                    tvPrice.setText(smartphone.getPrice() + "€");
+                    tvStock_sale.setText("Quedan "+smartphone.getStock_sale()+" unidades");
+                    tvName.setText(smartphone.getName());
+
                     //characteristics.add("SD" +  + "asdas");
 
                     Glide.with(context).load(smartphone.getCover()).into(ivCover);
 
                     ProductDataAdapter adapter = new ProductDataAdapter(getContext(), 0, characteristics);
                     lvCharacteristics.setAdapter(adapter);
+
+                    if (smartphone.getImages() != null)
+                    {
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+
+                        RecyclerView recyclerView = getView().findViewById(R.id.rvImagesProduct);
+
+                        recyclerView.setLayoutManager(layoutManager);
+
+
+                        RVGaleriaAdapter adapter1 = new RVGaleriaAdapter(smartphone.getImages(), context );
+
+
+                        recyclerView.setAdapter(adapter1);
+
+                    }
 
 
                 }

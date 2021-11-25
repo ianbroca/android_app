@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:paddingTop="140dp"
+        android:layout_marginTop="190dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="center">
-
+        <ImageButton
+            android:layout_marginLeft="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_arrow_back_outline"
+            android:adjustViewBounds="true">
+        </ImageButton>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +38,7 @@
                 android:orientation="vertical">
                 <TextView
                     android:layout_gravity="center"
-                    android:id="@+id/tvProduct"
+                    android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Funciona la vista de productos">
@@ -102,7 +108,8 @@
         </LinearLayout>
 
         <TextView
-            android:paddingLeft="20dp"
+            android:paddingLeft="15dp"
+            android:paddingBottom="40dp"
             android:id="@+id/tvGaleria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,15 +119,14 @@
         </TextView>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_gravity="center"
             android:id="@+id/rvImagesProduct"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="400dp"
             android:orientation="horizontal"
-            android:paddingTop="5dp"
             tools:listitem="@layout/recycler_view_item_1">
 
         </androidx.recyclerview.widget.RecyclerView>
-
 
 
     </LinearLayout>

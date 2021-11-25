@@ -6,18 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.almishop.R;
-import com.example.almishop.mainFragments.BackHomeFragment;
-import com.example.almishop.mainFragments.ShopFragment.ProductFragment;
-import com.example.almishop.model.Product;
 
 
 public class RVGaleriaAdapter extends RecyclerView.Adapter<RVGaleriaAdapter.RecyclerViewHolder>

@@ -8,25 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.almishop.MainActivity;
 import com.example.almishop.R;
-import com.example.almishop.io.ApiAdapter;
-import com.example.almishop.mainFragments.BackHomeFragment;
-import com.example.almishop.mainFragments.ShopFragment.ProductFragment;
 import com.example.almishop.model.Product;
-import com.example.almishop.model.Smartphone;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>
@@ -37,9 +27,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Product[] products;
     private Context mContext;
     private int pos;
+    private MainActivity activity1;
 
-    public RecyclerViewAdapter(Product[] products, Context context )
+    public RecyclerViewAdapter(Product[] products, Context context, MainActivity activity1)
     {
+        this.activity1 = activity1;
         this.products = products;
         this.mContext = context;
     }
@@ -80,6 +72,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.nameProduct.setText(products[pos].getName());
 
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -90,16 +84,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 bundle.putString("id", products[pos].getId());
                 bundle.putString("id_product_type", products[pos].getId_product_type());
 
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+               // AppCompatActivity activity = (AppCompatActivity) view.getContext();
 
-                Fragment productFragment = new ProductFragment();
+                //Fragment productFragment = new ProductFragment();
 
-                productFragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, productFragment).addToBackStack(null).commit();
+               /* productFragment.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, productFragment).addToBackStack(null).commit();*/
 
-                Fragment backHome = new BackHomeFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentSearchBarView, backHome).addToBackStack(null).commit();
+               /* Fragment backHome = new BackHomeFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentSearchBarView, backHome).addToBackStack(null).commit();*/
 
+                //activity1.navigateTo(activity1.productFragment);
+
+                activity1.navigateto_bundle(bundle, activity1.productFragment);
 
             }
         });

@@ -290,8 +290,7 @@ public class ShopFragment extends Fragment
 
         recyclerView.setLayoutManager(layoutManager);
 
-
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context );
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context, (MainActivity) getActivity() );
 
 
         recyclerView.setAdapter(adapter);
@@ -306,7 +305,7 @@ public class ShopFragment extends Fragment
         recyclerView.setLayoutManager(layoutManager);
 
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context );
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(data, context , (MainActivity) getActivity());
 
 
         recyclerView.setAdapter(adapter);

@@ -1,4 +1,4 @@
-package com.example.almishop.mainFragments;
+package com.example.almishop.mainFragments.ShopFragment;
 
 import android.content.Context;
 import android.content.Intent;

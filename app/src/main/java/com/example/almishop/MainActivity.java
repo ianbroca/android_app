@@ -1,6 +1,5 @@
 package com.example.almishop;
 
-import androidx.annotation.AnyRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +17,10 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Toast;
 
 import com.example.almishop.io.ApiAdapter;
-import com.example.almishop.io.ApiService;
 import com.example.almishop.mainFragments.AboutUsFragment;
+import com.example.almishop.mainFragments.ShopFragment.BackHomeFragment;
 import com.example.almishop.mainFragments.GalleryFragment;
 import com.example.almishop.mainFragments.LocationFragment;
 import com.example.almishop.mainFragments.ProfileFragment.ChangePasswordFragment;
@@ -56,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     public ChangeProfileFragment changeProfileFragment;
     public ChangePictureFragment changePictureFragment;
     public ChangePasswordFragment changePasswordFragment;
+    public  ProductFragment productFragment;
+    public  BackHomeFragment backHomeFragment;
     int selectedIndex = 0;
 
     private static String TAG = "MAIN ACTIVITY";
@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         changeProfileFragment = new ChangeProfileFragment();
         changePictureFragment = new ChangePictureFragment();
         changePasswordFragment = new ChangePasswordFragment();
+        backHomeFragment = new BackHomeFragment();
+        productFragment = new ProductFragment();
 
         searchBar = findViewById(R.id.fragmentSearchBarView);
         content = findViewById(R.id.fragmentContainerView);
@@ -307,5 +309,13 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();
+    }
+
+    public void navigateto_bundle(Bundle bundle, Fragment fragment)
+    {
+        /*Fragment backHome = new BackHomeFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_back_view, backHome).addToBackStack(null).commit();*/
+        fragment.setArguments(bundle);
+        navigateTo(fragment);
     }
 }
