@@ -95,12 +95,6 @@ public class ShopFragment extends Fragment
         tabs.addTab(tabs.newTab().setText("Tablets"));
         tabs.addTab(tabs.newTab().setText("Consolas"));
         productsOntabSelected();
-        if (tabs.getSelectedTabPosition() == 0)
-        {
-            Toast.makeText(context, "En proceso de implementacion", Toast.LENGTH_SHORT).show();
-        }
-
-
     }
 
     @Override

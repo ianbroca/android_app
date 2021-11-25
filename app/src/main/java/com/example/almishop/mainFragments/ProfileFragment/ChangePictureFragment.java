@@ -57,7 +57,6 @@ public class ChangePictureFragment extends Fragment {
     private Button btnCamera, btnSaveChanges;
     private ImageView ivImg;
 
-    private Uri imageUri;
     private String pfp;
 
     public ChangePictureFragment() { super(); }
@@ -91,11 +90,19 @@ public class ChangePictureFragment extends Fragment {
         btnSaveChanges = view.findViewById(R.id.btnChangePicture);
         ivImg = view.findViewById(R.id.ivCameraImg);
 
+        btnSaveChanges.setEnabled(false);
+
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openCamera();
             }
+        });
+
+        btnSaveChanges.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) { saveChanges(); }
         });
     }
 
@@ -114,23 +121,19 @@ public class ChangePictureFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == activity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            ivImg.setImageBitmap(photo);
-            Glide
-                    .with(context)
-                    .load(photo)
-                    .into(ivImg);
-        }
+        Bundle extras = data.getExtras();
+        Bitmap imageBitmap = (Bitmap) extras.get("data");
+        ivImg.setImageBitmap(imageBitmap);
+        pfp = "base64,"+getStringImage(imageBitmap);
+        btnSaveChanges.setEnabled(true);
     }
 
-    private String encodeImage(Bitmap bm)
-    {
+    public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG,100,baos);
-        byte[] b = baos.toByteArray();
-        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-        return encImage;
+        bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
+        return encodedImage;
     }
 
     private void saveChanges()
