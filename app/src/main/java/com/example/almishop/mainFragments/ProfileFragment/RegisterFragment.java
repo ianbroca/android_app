@@ -1,5 +1,6 @@
 package com.example.almishop.mainFragments.ProfileFragment;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -68,6 +69,8 @@ public class RegisterFragment extends Fragment
         localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         btnClose = view.findViewById(R.id.btnCloseRegister);
         etEmail = view.findViewById(R.id.etRegisterEmail);
@@ -160,9 +163,22 @@ public class RegisterFragment extends Fragment
 //                                    dismiss();
                                 } else
                                 {
+                                    builder.setTitle("Error al registrarse");
+                                    builder.setMessage("Por favor, inténtelo más tarde.");
+                                    builder.setPositiveButton("Aceptar", null);
+
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+
                                     Log.d(TAG, "Register failed. Username: " + email + " Password: " + password);
                                 }
                             } catch (Exception ex) {
+                                builder.setTitle("Error de servidor interno");
+                                builder.setMessage("Por favor, inténtelo más tarde.");
+                                builder.setPositiveButton("Aceptar", null);
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
                                 Log.d(TAG, "REGISTER ERROR");
                             }
                         }
@@ -173,11 +189,29 @@ public class RegisterFragment extends Fragment
                         }
                     });
                 } else if (!password.equals(repassword)) {
+                    builder.setTitle("Error al registrarse");
+                    builder.setMessage("Las contraseñas no coinciden.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.d(TAG, "onClick: Las contraseñas no coinciden");
                     // DIALOGO DE ERROR PORQUE ERES GILIPOLLAS
                 } else if (finder) {
+                    builder.setTitle("Error al registrarse");
+                    builder.setMessage("La contraseña no debe contener carácteres especiales.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.e(TAG, "onClick: Contraseña con carácteres especiales.");
                 } else {
+                    builder.setTitle("Error al registrarse");
+                    builder.setMessage("Hay campos vacíos, por favor rellénelos.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.e(TAG, "onClick: Campos vacíos");
                 }
             }

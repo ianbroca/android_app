@@ -1,5 +1,6 @@
 package com.example.almishop.mainFragments.ProfileFragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -64,6 +65,8 @@ public class ChangePasswordFragment extends DialogFragment {
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
         btnCloseRegister = getView().findViewById(R.id.btnCloseRegister);
         btnChangePassword = getView().findViewById(R.id.btnChangePassword);
         etOldPassword = getView().findViewById(R.id.etOldPassword);
@@ -115,46 +118,118 @@ public class ChangePasswordFragment extends DialogFragment {
 
                                                         activity.navigateTo(activity.mainFragments.get(0));
                                                     } else if (response.body() != 200) {
+                                                        builder.setTitle("Error de servidor interno");
+                                                        builder.setMessage("Por favor, inténtelo más tarde.");
+                                                        builder.setPositiveButton("Aceptar", null);
+
+                                                        AlertDialog dialog = builder.create();
+                                                        dialog.show();
                                                         Log.d(TAG, "changePwd changePwdCall KO - incorrect response (response != 200)");
                                                     } else {
+                                                        builder.setTitle("Error de servidor interno");
+                                                        builder.setMessage("Por favor, inténtelo más tarde.");
+                                                        builder.setPositiveButton("Aceptar", null);
+
+                                                        AlertDialog dialog = builder.create();
+                                                        dialog.show();
                                                         Log.d(TAG, "changePwd changePwdCall KO - response NOT successful");
                                                     }
                                                 }
 
                                                 @Override
                                                 public void onFailure(Call<Integer> call, Throwable t) {
+                                                    builder.setTitle("Error de servidor interno");
+                                                    builder.setMessage("Por favor, inténtelo más tarde.");
+                                                    builder.setPositiveButton("Aceptar", null);
+
+                                                    AlertDialog dialog = builder.create();
+                                                    dialog.show();
                                                     Log.d(TAG, "changePwd changePwdCall KO - " + t);
                                                 }
                                             });
                                         } else if (userLogin.getEmail() != null) {
+                                            builder.setTitle("Error de servidor interno");
+                                            builder.setMessage("Por favor, inténtelo más tarde.");
+                                            builder.setPositiveButton("Aceptar", null);
+
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
                                             Log.d(TAG, "changePwd login KO - response empty");
                                         } else {
+                                            builder.setTitle("Error de servidor interno");
+                                            builder.setMessage("Por favor, inténtelo más tarde.");
+                                            builder.setPositiveButton("Aceptar", null);
+
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
                                             Log.d(TAG, "changePwd login KO - response NOT successful");
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(Call<User> call, Throwable t) {
+                                        builder.setTitle("Error de servidor interno");
+                                        builder.setMessage("Por favor, inténtelo más tarde.");
+                                        builder.setPositiveButton("Aceptar", null);
+
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
                                         Log.d(TAG, "changePwd login KO - " + t);
                                     }
                                 });
                             } else if (user.getEmail() != null) {
+                                builder.setTitle("Error de servidor interno");
+                                builder.setMessage("Por favor, inténtelo más tarde.");
+                                builder.setPositiveButton("Aceptar", null);
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
                                 Log.d(TAG, "changePwd getUser KO - response empty");
                             } else {
+                                builder.setTitle("Error de servidor interno");
+                                builder.setMessage("Por favor, inténtelo más tarde.");
+                                builder.setPositiveButton("Aceptar", null);
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
                                 Log.d(TAG, "changePwd getUser KO - response NOT successful");
                             }
                         }
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
+                            builder.setTitle("Error de servidor interno");
+                            builder.setMessage("Por favor, inténtelo más tarde.");
+                            builder.setPositiveButton("Aceptar", null);
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
                             Log.d(TAG, "changePwd getUser KO - " + t);
                         }
                     });
                 } else if (oldPassword.equals("") || newPassword.equals("") || repeatNewPassword.equals("")) {
+                    builder.setTitle("Error");
+                    builder.setMessage("Hay campos vacíos, por favor rellénelos.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.d(TAG, "onClick: changePWD KO - empty fields");
                 } else if (oldPassword.equals(newPassword)) {
+                    builder.setTitle("Error");
+                    builder.setMessage("La contraseña nueva no puede ser igual a la antigua.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.d(TAG, "onClick: changePWD KO - oldPwd = newPwd");
                 } else {
+                    builder.setTitle("Error");
+                    builder.setMessage("Las contraseñas no coinciden.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.d(TAG, "onClick: changePWD KO - newPwd != repNewPwd");
                 }
             }

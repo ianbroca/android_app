@@ -1,5 +1,6 @@
 package com.example.almishop.mainFragments.ProfileFragment;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -66,6 +67,8 @@ public class ChangeProfileFragment extends Fragment
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
         int id = Integer.parseInt(localStorage.getString(getString(R.string.id_user), ""));
         Call<User> call = ApiAdapter.getApiService().getUserById(id);
         call.enqueue(new Callback<User>() {
@@ -85,6 +88,12 @@ public class ChangeProfileFragment extends Fragment
                         Log.d(TAG, "No se puedo obtener el usuario con id: " + id);
                     }
                 } catch (Exception ex) {
+                    builder.setTitle("Error obtener usuario");
+                    builder.setMessage("Por favor, inténtelo más tarde.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.d(TAG, "ERROR AL OBTENER EL USUARIO");
                 }
             }
@@ -175,9 +184,21 @@ public class ChangeProfileFragment extends Fragment
 //                                    dismiss();
                                 } else
                                 {
+                                    builder.setTitle("Error al guardar los cambios");
+                                    builder.setMessage("Por favor, inténtelo más tarde.");
+                                    builder.setPositiveButton("Aceptar", null);
+
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
                                     Log.d(TAG, "Error al guardar los cambios.");
                                 }
                             } catch (Exception ex) {
+                                builder.setTitle("Error de servidor interno");
+                                builder.setMessage("Por favor, inténtelo más tarde.");
+                                builder.setPositiveButton("Aceptar", null);
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
                                 Log.d(TAG, "PROFILE ERROR");
                             }
                         }
@@ -189,6 +210,12 @@ public class ChangeProfileFragment extends Fragment
                         }
                     });
                 } else {
+                    builder.setTitle("Error");
+                    builder.setMessage("Hay campos vacíos, por favor rellénelos.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.e(TAG, "onClick: KO - Campos vacíos");
                 }
             }

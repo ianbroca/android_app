@@ -1,5 +1,6 @@
 package com.example.almishop.mainFragments.ShopFragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -93,6 +94,8 @@ public class LoginDialogFragment extends DialogFragment
         etPassword = view.findViewById(R.id.etLoginPassword);
         btnLogin = view.findViewById(R.id.btnLogin);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
         btnClose.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -128,13 +131,31 @@ public class LoginDialogFragment extends DialogFragment
                                         dismiss();
                                     } else
                                     {
+                                        builder.setTitle("Error al iniciar sesión");
+                                        builder.setMessage("El correo y contraseña introducidos no coinciden.");
+                                        builder.setPositiveButton("Aceptar", null);
+
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
                                         Log.d(TAG, "login KO - El correo y contraseña introducidos no coinciden.");
                                     }
                                 } else
                                 {
+                                    builder.setTitle("Error al iniciar sesión");
+                                    builder.setMessage("No se pudo iniciar sesión.");
+                                    builder.setPositiveButton("Aceptar", null);
+
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
                                     Log.d(TAG, "KO - Username: " + email + " Password: " + password);
                                 }
                             } catch (Exception ex) {
+                                builder.setTitle("Error al iniciar sesión");
+                                builder.setMessage("Error interno de servidor, por favor inténtelo más tarde.");
+                                builder.setPositiveButton("Aceptar", null);
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
                                 Log.d(TAG, "LOGIN ERROR" + ex);
                             }
                         }
@@ -145,6 +166,12 @@ public class LoginDialogFragment extends DialogFragment
                         }
                     });
                 } else {
+                    builder.setTitle("Error");
+                    builder.setMessage("Hay campos vacíos, por favor rellénelos.");
+                    builder.setPositiveButton("Aceptar", null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     Log.e(TAG, "login onClick: KO - empty fields");
                 }
             }
