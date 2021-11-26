@@ -94,115 +94,118 @@ public class ShoppingCartFragment extends DialogFragment {
 
         String cart = localStorage.getString(getString(R.string.cart), "");
         cart = cart.replaceFirst("/", "");
-        ArrayList<String> product_ids, product_types;
-        product_ids = new ArrayList<>();
-        product_types = new ArrayList<>();
-        String[] cart_1 = cart.split("/");
-        for (int i = 0; i < cart_1.length; i++) {
-            String[] cart_2 = cart_1[i].split(",");
-            product_ids.add(cart_2[0]);
-            product_types.add(cart_2[1]);
-        }
-        ArrayList<Product> listElements = new ArrayList<>();
-        for (int i = 0; i < product_ids.size(); i++) {
-            final Product[] product = new Product[1];
-            Log.d("TAG", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + product_ids.get(i));
-            switch (product_types.get(i))
-            {
-                case "1": // Smartphone
-                    Call<Smartphone> callSmartphone = ApiAdapter.getApiService().getSmartphoneById(product_ids.get(i));
-                    callSmartphone.enqueue(new Callback<Smartphone>() {
-                        @Override
-                        public void onResponse(Call<Smartphone> call, Response<Smartphone> response) {
-                            listElements.add(response.body());
-                        }
-
-                        @Override
-                        public void onFailure(Call<Smartphone> call, Throwable t) {
-
-                        }
-                    });
-                    break;
-                case "2": // Tablet
-                    Call<Tablet> callTablet = ApiAdapter.getApiService().getTabletsById(product_ids.get(i));
-                    callTablet.enqueue(new Callback<Tablet>() {
-                        @Override
-                        public void onResponse(Call<Tablet> call, Response<Tablet> response) {
-                            listElements.add(response.body());
-                        }
-
-                        @Override
-                        public void onFailure(Call<Tablet> call, Throwable t) {
-
-                        }
-                    });
-                    break;
-                case "3": // Videogame
-                    Call<Videogame> callVideogame = ApiAdapter.getApiService().getVideogamesById(product_ids.get(i));
-                    callVideogame.enqueue(new Callback<Videogame>() {
-                        @Override
-                        public void onResponse(Call<Videogame> call, Response<Videogame> response) {
-                            listElements.add(response.body());
-                        }
-
-                        @Override
-                        public void onFailure(Call<Videogame> call, Throwable t) {
-
-                        }
-                    });
-                    break;
-                case "4": // Console
-                    Call<Console> callConsole = ApiAdapter.getApiService().getConsolesById(product_ids.get(i));
-                    callConsole.enqueue(new Callback<Console>() {
-                        @Override
-                        public void onResponse(Call<Console> call, Response<Console> response) {
-                            listElements.add(response.body());
-                        }
-
-                        @Override
-                        public void onFailure(Call<Console> call, Throwable t) {
-
-                        }
-                    });
-                    break;
-                default:
-                    break;
+        if (cart.length() >= 3)
+        {
+            ArrayList<String> product_ids, product_types;
+            product_ids = new ArrayList<>();
+            product_types = new ArrayList<>();
+            String[] cart_1 = cart.split("/");
+            for (int i = 0; i < cart_1.length; i++) {
+                String[] cart_2 = cart_1[i].split(",");
+                product_ids.add(cart_2[0]);
+                product_types.add(cart_2[1]);
             }
-        }
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                ShoppingCartAdapter adapter = new ShoppingCartAdapter(context, 0, listElements);
-                listView.setAdapter(adapter);
-            }
-        }, 1500);
+            ArrayList<Product> listElements = new ArrayList<>();
+            for (int i = 0; i < product_ids.size(); i++) {
+                final Product[] product = new Product[1];
+                Log.d("TAG", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + product_ids.get(i));
+                switch (product_types.get(i))
+                {
+                    case "1": // Smartphone
+                        Call<Smartphone> callSmartphone = ApiAdapter.getApiService().getSmartphoneById(product_ids.get(i));
+                        callSmartphone.enqueue(new Callback<Smartphone>() {
+                            @Override
+                            public void onResponse(Call<Smartphone> call, Response<Smartphone> response) {
+                                listElements.add(response.body());
+                            }
 
-        btnBuyCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Sale data = new Sale(Integer.parseInt(localStorage.getString(getString(R.string.id_user), "")), product_ids);
-                Call<Integer> call = ApiAdapter.getApiService().sale(data);
-                call.enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        localStorageEditor.putString(getString(R.string.cart), "");
-                        activity.navigateTo(activity.mainFragments.get(0));
+                            @Override
+                            public void onFailure(Call<Smartphone> call, Throwable t) {
+
+                            }
+                        });
+                        break;
+                    case "2": // Tablet
+                        Call<Tablet> callTablet = ApiAdapter.getApiService().getTabletsById(product_ids.get(i));
+                        callTablet.enqueue(new Callback<Tablet>() {
+                            @Override
+                            public void onResponse(Call<Tablet> call, Response<Tablet> response) {
+                                listElements.add(response.body());
+                            }
+
+                            @Override
+                            public void onFailure(Call<Tablet> call, Throwable t) {
+
+                            }
+                        });
+                        break;
+                    case "3": // Videogame
+                        Call<Videogame> callVideogame = ApiAdapter.getApiService().getVideogamesById(product_ids.get(i));
+                        callVideogame.enqueue(new Callback<Videogame>() {
+                            @Override
+                            public void onResponse(Call<Videogame> call, Response<Videogame> response) {
+                                listElements.add(response.body());
+                            }
+
+                            @Override
+                            public void onFailure(Call<Videogame> call, Throwable t) {
+
+                            }
+                        });
+                        break;
+                    case "4": // Console
+                        Call<Console> callConsole = ApiAdapter.getApiService().getConsolesById(product_ids.get(i));
+                        callConsole.enqueue(new Callback<Console>() {
+                            @Override
+                            public void onResponse(Call<Console> call, Response<Console> response) {
+                                listElements.add(response.body());
+                            }
+
+                            @Override
+                            public void onFailure(Call<Console> call, Throwable t) {
+
+                            }
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    ShoppingCartAdapter adapter = new ShoppingCartAdapter(context, 0, listElements);
+                    listView.setAdapter(adapter);
+
+                    float totalPrice = 0;
+                    for (int i = 0; i < listElements.size(); i++) {
+                        totalPrice += Float.parseFloat(listElements.get(i).getPrice());
                     }
+                    final DecimalFormat df = new DecimalFormat("0.00");
+                    tvTotalPrice.setText("Importe total: " + df.format(totalPrice) + "€");
+                }
+            }, 1000);
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
+            btnBuyCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Sale data = new Sale(Integer.parseInt(localStorage.getString(getString(R.string.id_user), "")), product_ids);
+                    Call<Integer> call = ApiAdapter.getApiService().sale(data);
+                    call.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            localStorageEditor.putString(getString(R.string.cart), "").commit();
+                            activity.navigateTo(activity.mainFragments.get(0));
+                        }
 
-                    }
-                });
-            }
-        });
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
 
-        float totalPrice = 0;
-        for (int i = 0; i < listElements.size(); i++) {
-            totalPrice += Float.parseFloat(listElements.get(i).getPrice());
+                        }
+                    });
+                }
+            });
         }
-        final DecimalFormat df = new DecimalFormat("0.00");
-        tvTotalPrice.setText("Importe total: " + df.format(totalPrice) + "€");
     }
 
     @Override
