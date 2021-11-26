@@ -94,6 +94,7 @@ public class ShoppingCartFragment extends DialogFragment {
 
         String cart = localStorage.getString(getString(R.string.cart), "");
         cart = cart.replaceFirst("/", "");
+        cart = cart.replaceFirst("/", "");
         if (cart.length() >= 3)
         {
             ArrayList<String> product_ids, product_types;
