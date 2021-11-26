@@ -10,7 +10,18 @@ public class User
     private String surname2;
     private String birthdate;
     private String pfp;
+    private String message;
     private boolean id_rol;
+
+    public String getMessage()
+    {
+        return message;
+    }
+
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
 
     public int getId() {
         return id;

@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.almishop.MainActivity;
@@ -22,6 +24,7 @@ public class SearchBarFragment extends Fragment {
     public ProfileDialogFragment dialog;
     Context context;
     ImageButton btnProfile;
+    private SearchView searchView;
 
     public SearchBarFragment() {
         super();
@@ -49,6 +52,7 @@ public class SearchBarFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        searchView = view.findViewById(R.id.searchBar);
         activity = (MainActivity) getActivity();
 
         // mas cosas
@@ -63,6 +67,15 @@ public class SearchBarFragment extends Fragment {
                 activity.getLocation();
                 dialog = new ProfileDialogFragment();
                 dialog.show(getActivity().getSupportFragmentManager(), "Profile");
+            }
+        });
+
+        searchView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(context, "La barra de búsqueda no está implementada en la demo.", Toast.LENGTH_SHORT).show();
             }
         });
     }

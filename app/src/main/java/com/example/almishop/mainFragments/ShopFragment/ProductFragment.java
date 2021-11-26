@@ -2,15 +2,18 @@ package com.example.almishop.mainFragments.ShopFragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,9 +28,15 @@ import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.mainFragments.ShopFragment.adapters.ProductDataAdapter;
 import com.example.almishop.mainFragments.ShopFragment.adapters.RVGaleriaAdapter;
 import com.example.almishop.model.Console;
+import com.example.almishop.model.Product;
 import com.example.almishop.model.Smartphone;
 import com.example.almishop.model.Tablet;
 import com.example.almishop.model.Videogame;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -52,6 +61,11 @@ public class ProductFragment extends Fragment
     private TextView tvStock_sale;
     private ImageView ivCover;
     private ImageButton btnBack = null;
+    private Button btnAddProduct;
+    private MainActivity activity;
+    private ArrayList<Product> arraylist = new ArrayList<>();
+    private SharedPreferences localStorage;
+    private SharedPreferences.Editor localStorageEditor;
 
 
     public ProductFragment()
@@ -85,6 +99,9 @@ public class ProductFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
+        localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
+        localStorageEditor = localStorage.edit();
+
         lvCharacteristics = view.findViewById(R.id.lvproducData);
 
         ivCover = view.findViewById(R.id.ivProduct);
@@ -92,6 +109,8 @@ public class ProductFragment extends Fragment
         tvPrice = view.findViewById(R.id.tvPrice);
 
         tvStock_sale = view.findViewById(R.id.tvStock_sale);
+
+        btnAddProduct = view.findViewById(R.id.btnAddproduct);
 
         tvName = view.findViewById(R.id.tvName);
 
@@ -106,6 +125,26 @@ public class ProductFragment extends Fragment
                 activity.navigateTo(activity.mainFragments.get(0));
             }
         });
+
+       /* btnAddProduct.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(context, "Se ha añadido el producto al cesta", Toast.LENGTH_SHORT).show();
+
+                if (smartphone != null)
+                {
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("smartphone", arraylist);
+                    activity.shopFragment.setArguments(bundle);
+                    activity.navigateTo(activity.shopFragment);
+                }
+
+            }
+        });*/
+
 
 
 
@@ -133,6 +172,7 @@ public class ProductFragment extends Fragment
                     characteristics.add("Camara: " + smartphone.getCamera() + "MP");
                     characteristics.add("SD: " + sd );
                     characteristics.add("Color: " + smartphone.getColor());
+                    arraylist.add(smartphone);
 
                     tvPrice.setText(smartphone.getPrice() + "€");
                     tvStock_sale.setText("Quedan "+smartphone.getStock_sale()+" unidades");
@@ -163,6 +203,28 @@ public class ProductFragment extends Fragment
 
                     }
 
+                    String arrlocal;
+                    arrlocal = localStorage.getString("products", null);
+                    if (arrlocal == null)
+                    {
+                        arraylist.add(smartphone);
+                        String json = arraylist.toString();
+                        localStorageEditor.putString("products", json);
+                        Toast.makeText(context, "mi smatphone" + smartphone.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(context, "estoy en el else", Toast.LENGTH_SHORT).show();
+                        try
+                        {
+                            //arraylist = arrlocal.
+                            JSONObject productObj = new JSONObject(arrlocal);
+
+                        } catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
 
                 }
             }

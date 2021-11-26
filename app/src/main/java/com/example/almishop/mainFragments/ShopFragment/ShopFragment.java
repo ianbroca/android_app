@@ -78,8 +78,19 @@ public class ShopFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "initRecyclerView: init recyclerview");
 
+        Smartphone smartphone;
+        if (getArguments() != null)
+        {
+            smartphone = (Smartphone) getArguments().getSerializable("smarthpone");
+            Log.d(TAG, " " + smartphone.toString() );
+        }
+
+
+
+
 
         tabs = view.findViewById(R.id.tlProducts);
+
 
 
         tabs.addTab(tabs.newTab().setText("Videojuegos"));

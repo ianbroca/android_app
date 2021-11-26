@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     public ProductFragment productFragment;
     public BackHomeFragment backHomeFragment;
     public ShoppingHistoryFragment shoppingHistoryFragment;
+    public ShopFragment shopFragment;
     int selectedIndex = 0;
 
     private static String TAG = "MAIN ACTIVITY";
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         backHomeFragment = new BackHomeFragment();
         productFragment = new ProductFragment();
         shoppingHistoryFragment = new ShoppingHistoryFragment();
+        shopFragment = new ShopFragment();
 
         searchBar = findViewById(R.id.fragmentSearchBarView);
         content = findViewById(R.id.fragmentContainerView);

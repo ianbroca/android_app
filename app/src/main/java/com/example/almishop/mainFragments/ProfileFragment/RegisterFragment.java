@@ -152,16 +152,17 @@ public class RegisterFragment extends Fragment
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             try {
-                                if (response.isSuccessful() && !response.body().equals("Ese email ya está en uso."))
+                                User user = response.body();
+
+                                if (response.isSuccessful() && !user.getMessage().equals("Ese email ya está en uso."))
                                 {
-                                    User user = response.body();
                                     Log.d(TAG, "Register successful: " + user.getName() + " " + user.getSurname1() + " " + user.getSurname2());
                                     localStorageEditor.putString(getString(R.string.id_user), "" + user.getId()).commit();
                                     activity.navigateTo(activity.mainFragments.get(0));
 //                                    ProfileDialogFragment profileDialogFragment = (ProfileDialogFragment) getActivity().getSupportFragmentManager().findFragmentByTag("Profile");
 //                                    profileDialogFragment.dismiss();
 //                                    dismiss();
-                                } else if (response.body().equals("Ese email ya está en uso.")) {
+                                } else if (user.getMessage().equals("Ese email ya está en uso.")) {
                                     builder.setTitle("Error al registrarse");
                                     builder.setMessage("Ese email ya está en uso.");
                                     builder.setPositiveButton("Aceptar", null);
@@ -222,7 +223,10 @@ public class RegisterFragment extends Fragment
                     dialog.show();
                     Log.e(TAG, "onClick: Campos vacíos");
                 }
+
+
             }
+
         });
     }
 
