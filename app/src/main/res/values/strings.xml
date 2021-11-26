@@ -10,6 +10,7 @@
 
     <string name="local_storage_key">LocalStorage</string>
     <string name="id_user">id_user</string>
+    <string name="cart">cart</string>
 
     <string name="about_us_text">Nosotros en AlmiShop intentamos ofecer una experiencia de compra única, donde lo importante al final del día eres tú, nuestro cliente. \n \nSomos un pequeño equipo, por ahora, ¡e intentamos que vuestra experiencia sea siempre la mejor posible! \n \n \nNuestra historia comienza en un grado el cual todos compartimos, y nos hizo aprender como programadores. Tras trabajar en la asignatura de Empresa, decidimos que sería una buena idea abrir una tienda deelectrónica, donde poder comprar todos tus dispositivos móviles, consolas y videojuegos. De aquella idea surgió nuestra empresa, AlmiShop. \nAunque al principio nos costó un poco montar todo, pero tras terminarlo, conseguimos llegar a los 1000 pedidos en tan solo dos meses! \n \nPaso a paso, hito a hito, cada día mejoramos un poquito más la página, para que tú, nuestro cliente, sientas que estás en una web en la cual puedas confiar para tus futuras compras.\n \n¡Esperamos que tu experiencia sea agradable con nosotros!</string>
     <string name="about_us_follow">¡Síguenos en redes!</string>

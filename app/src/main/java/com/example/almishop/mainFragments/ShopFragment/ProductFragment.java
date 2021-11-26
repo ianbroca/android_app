@@ -66,6 +66,7 @@ public class ProductFragment extends Fragment
     private ArrayList<Product> arraylist = new ArrayList<>();
     private SharedPreferences localStorage;
     private SharedPreferences.Editor localStorageEditor;
+    String id_product_type;
 
 
     public ProductFragment()
@@ -85,7 +86,7 @@ public class ProductFragment extends Fragment
     {
 
         id = getArguments().getString("id");
-        String id_product_type = getArguments().getString("id_product_type");
+        id_product_type = getArguments().getString("id_product_type");
        // callProductById(id);
         getProducBytypeAndId(id, id_product_type);
 
@@ -98,6 +99,7 @@ public class ProductFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        activity = (MainActivity) getActivity();
 
         localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
         localStorageEditor = localStorage.edit();
@@ -121,29 +123,31 @@ public class ProductFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                MainActivity activity = (MainActivity) getActivity();
                 activity.navigateTo(activity.mainFragments.get(0));
             }
         });
 
-       /* btnAddProduct.setOnClickListener(new View.OnClickListener()
+        btnAddProduct.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 Toast.makeText(context, "Se ha añadido el producto al cesta", Toast.LENGTH_SHORT).show();
+                String nextCart = localStorage.getString(getString(R.string.cart), "")+ "/" + id + "," + id_product_type;
+                localStorageEditor.putString(getString(R.string.cart), nextCart);
+                activity.navigateTo(activity.mainFragments.get(0));
 
-                if (smartphone != null)
-                {
-
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("smartphone", arraylist);
-                    activity.shopFragment.setArguments(bundle);
-                    activity.navigateTo(activity.shopFragment);
-                }
+//                if (smartphone != null)
+//                {
+//
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("smartphone", arraylist);
+//                    activity.shopFragment.setArguments(bundle);
+//                    activity.navigateTo(activity.shopFragment);
+//                }
 
             }
-        });*/
+        });
 
 
 

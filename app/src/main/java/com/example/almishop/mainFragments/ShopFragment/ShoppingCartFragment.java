@@ -3,10 +3,10 @@ package com.example.almishop.mainFragments.ShopFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -16,6 +16,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
+import com.example.almishop.model.HistoryProduct;
 import com.example.almishop.model.Product;
 
 import java.util.ArrayList;
@@ -26,16 +27,16 @@ import retrofit2.Response;
 
 public class ShoppingCartFragment extends DialogFragment {
 
-    private static String TAG = "PASSWORD CHANGE DIALOG";
-    private SharedPreferences localStorage;
-    private SharedPreferences.Editor localStorageEditor;
     private MainActivity activity;
     private Context context;
 
     private ImageView btnCloseCart;
 
     private ListView listView;
-    private ArrayList<Product> listElements;
+    public ArrayList<Product> listElements;
+
+    private SharedPreferences localStorage;
+    private SharedPreferences.Editor localStorageEditor;
 
     public ShoppingCartFragment() { super(); }
 
@@ -59,9 +60,10 @@ public class ShoppingCartFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        localStorage = getActivity().getPreferences(Context.MODE_PRIVATE);
-        localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
+        localStorage = activity.getPreferences(Context.MODE_PRIVATE);
+        localStorageEditor = localStorage.edit();
+        listElements = new ArrayList<>();
 
         btnCloseCart = view.findViewById(R.id.btnCloseCart);
         listView = view.findViewById(R.id.CartListView);
@@ -73,7 +75,11 @@ public class ShoppingCartFragment extends DialogFragment {
             }
         });
 
-        listElements = new ArrayList<Product>();
+        String cart = localStorage.getString(getString(R.string.cart), "");
+        String[] cart_1 = cart.split("/");
+        for (int i = 0; i < cart_1.length; i++) {
+            Log.d("TAG", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: " + cart_1[i]);
+        }
 
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override

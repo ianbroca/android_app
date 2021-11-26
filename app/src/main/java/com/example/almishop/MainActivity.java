@@ -33,7 +33,9 @@ import com.example.almishop.mainFragments.ProfileFragment.RegisterFragment;
 import com.example.almishop.mainFragments.ShopFragment.ProductFragment;
 import com.example.almishop.mainFragments.ShopFragment.SearchBarFragment;
 import com.example.almishop.mainFragments.ShopFragment.ShopFragment;
+import com.example.almishop.mainFragments.ShopFragment.ShoppingCartFragment;
 import com.example.almishop.model.Location;
+import com.example.almishop.model.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public ProductFragment productFragment;
     public BackHomeFragment backHomeFragment;
     public ShoppingHistoryFragment shoppingHistoryFragment;
+    public ShoppingCartFragment shoppingCartFragment;
 
     public ShopFragment shopFragment;
 
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         backHomeFragment = new BackHomeFragment();
         productFragment = new ProductFragment();
         shoppingHistoryFragment = new ShoppingHistoryFragment();
+        shoppingCartFragment = new ShoppingCartFragment();
 
         shopFragment = new ShopFragment();
 

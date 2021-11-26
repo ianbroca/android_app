@@ -22,11 +22,13 @@ import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.mainFragments.ShopFragment.adapters.RecyclerViewAdapter;
 import com.example.almishop.model.Console;
+import com.example.almishop.model.HistoryProduct;
 import com.example.almishop.model.Product;
 import com.example.almishop.model.Smartphone;
 import com.example.almishop.model.Tablet;
 import com.example.almishop.model.User;
 import com.example.almishop.model.Videogame;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
@@ -44,6 +46,7 @@ public class ShopFragment extends Fragment
 
     private TabLayout tabs = null;
     private Context context;
+    private FloatingActionButton btnCart;
 
 
 
@@ -76,6 +79,16 @@ public class ShopFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        MainActivity activity = (MainActivity) getActivity();
+        btnCart = view.findViewById(R.id.btnCart);
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.navigateTo(activity.shoppingCartFragment);
+            }
+        });
+
         Log.d(TAG, "initRecyclerView: init recyclerview");
 
         Smartphone smartphone;
