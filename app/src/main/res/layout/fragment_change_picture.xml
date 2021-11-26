@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/btnCloseRegister"
+        android:id="@+id/btnClosePicture"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"

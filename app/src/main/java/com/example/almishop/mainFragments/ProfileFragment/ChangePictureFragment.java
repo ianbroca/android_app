@@ -55,7 +55,7 @@ public class ChangePictureFragment extends Fragment {
     private Context context;
 
     private Button btnCamera, btnSaveChanges;
-    private ImageView ivImg;
+    private ImageView btnClosePicture, ivImg;
 
     private String pfp;
 
@@ -86,11 +86,17 @@ public class ChangePictureFragment extends Fragment {
         localStorageEditor = localStorage.edit();
         checkExternalStoragePermission();
 
+        btnClosePicture = view.findViewById(R.id.btnClosePicture);
         btnCamera = view.findViewById(R.id.btnCamera);
         btnSaveChanges = view.findViewById(R.id.btnChangePicture);
         ivImg = view.findViewById(R.id.ivCameraImg);
 
         btnSaveChanges.setEnabled(false);
+
+        btnClosePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { activity.navigateTo(activity.mainFragments.get(0)); }
+        });
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
