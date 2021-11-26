@@ -127,11 +127,13 @@ public class ChangePictureFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        Bundle extras = data.getExtras();
-        Bitmap imageBitmap = (Bitmap) extras.get("data");
-        ivImg.setImageBitmap(imageBitmap);
-        pfp = "base64,"+getStringImage(imageBitmap);
-        btnSaveChanges.setEnabled(true);
+        try {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ivImg.setImageBitmap(imageBitmap);
+            pfp = "base64,"+getStringImage(imageBitmap);
+            btnSaveChanges.setEnabled(true);
+        } catch (Exception e) { }
     }
 
     public String getStringImage(Bitmap bmp) {
