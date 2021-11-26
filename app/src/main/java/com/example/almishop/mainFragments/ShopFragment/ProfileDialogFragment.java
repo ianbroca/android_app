@@ -1,5 +1,6 @@
 package com.example.almishop.mainFragments.ShopFragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -91,6 +92,7 @@ public class ProfileDialogFragment extends DialogFragment
             listElements.add("Editar información personal");
             listElements.add("Cambiar foto de perfil");
             listElements.add("Cambiar contraseña");
+            listElements.add("Eliminar cuenta");
             Log.d("TAG", "Encontrado: " + localStorage.getString(getString(R.string.id_user), ""));
             view = inflater.inflate(R.layout.fragment_dialog_profile, container, false);
             btnClose = view.findViewById(R.id.btnCloseProfile);
@@ -115,6 +117,8 @@ public class ProfileDialogFragment extends DialogFragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
         if (ivPfp != null)
         {
             int id = Integer.parseInt(localStorage.getString(getString(R.string.id_user), ""));
@@ -185,6 +189,34 @@ public class ProfileDialogFragment extends DialogFragment
                             Log.d(TAG, "onItemClick: Navigate to change password");
                             activity.navigateTo(activity.changePasswordFragment);
                             dismiss();
+                            break;
+                        case 4: // Eliminar cuenta
+                            Log.d(TAG, "onItemClick: archive account");
+                            builder.setTitle("Advertencia");
+                            builder.setMessage("¿Seguro que quiere eliminar su cuenta?");
+                            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    String id = localStorage.getString(getString(R.string.id_user), "");
+                                    Call<Integer> call = ApiAdapter.getApiService().deleteUser(id);
+                                    call.enqueue(new Callback<Integer>() {
+                                        @Override
+                                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                            localStorageEditor.putString(getString(R.string.id_user), "").commit();
+                                            dismiss();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Integer> call, Throwable t) {
+
+                                        }
+                                    });
+                                }
+                            });
+                            builder.setNegativeButton("Cancelar", null);
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
                             break;
                     }
                 } else

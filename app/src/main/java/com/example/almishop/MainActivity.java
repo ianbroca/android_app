@@ -126,9 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragmentContainerView, mainFragments.get(selectedIndex))
                 .commit();
 
-
-
-
         menu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

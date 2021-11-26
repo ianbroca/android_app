@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -84,4 +85,7 @@ public interface ApiService
 
     @GET("transaction/{id}")
     Call<ArrayList<HistoryTransaction>> getShoppingHistory(@Path("id") String id);
+
+    @DELETE("user/archive/{id}")
+    Call<Integer> deleteUser(@Path("id") String id);
 }
