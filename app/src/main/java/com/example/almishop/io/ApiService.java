@@ -11,6 +11,7 @@ import com.example.almishop.model.Location;
 import com.example.almishop.model.Login;
 import com.example.almishop.model.Product;
 import com.example.almishop.model.Register;
+import com.example.almishop.model.Sale;
 import com.example.almishop.model.Smartphone;
 import com.example.almishop.model.Tablet;
 import com.example.almishop.model.User;
@@ -88,4 +89,7 @@ public interface ApiService
 
     @DELETE("user/archive/{id}")
     Call<Integer> deleteUser(@Path("id") String id);
+
+    @POST("transaction/sale")
+    Call<Integer> sale(@Body Sale data);
 }

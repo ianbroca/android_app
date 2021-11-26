@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,11 +25,13 @@ import com.example.almishop.mainFragments.ShopFragment.adapters.ShoppingCartAdap
 import com.example.almishop.model.Console;
 import com.example.almishop.model.HistoryProduct;
 import com.example.almishop.model.Product;
+import com.example.almishop.model.Sale;
 import com.example.almishop.model.Smartphone;
 import com.example.almishop.model.Tablet;
 import com.example.almishop.model.User;
 import com.example.almishop.model.Videogame;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -41,6 +44,8 @@ public class ShoppingCartFragment extends DialogFragment {
     private Context context;
 
     private ImageView btnCloseCart;
+    private Button btnBuyCart;
+    private TextView tvTotalPrice;
 
     private ListView listView;
     public ArrayList<Product> listElements;
@@ -76,7 +81,9 @@ public class ShoppingCartFragment extends DialogFragment {
         listElements = new ArrayList<>();
 
         btnCloseCart = view.findViewById(R.id.btnCloseCart);
+        btnBuyCart = view.findViewById(R.id.btnBuyCart);
         listView = view.findViewById(R.id.CartListView);
+        tvTotalPrice = view.findViewById(R.id.tvTotalCartPrice);
 
         btnCloseCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,17 +175,34 @@ public class ShoppingCartFragment extends DialogFragment {
                 ShoppingCartAdapter adapter = new ShoppingCartAdapter(context, 0, listElements);
                 listView.setAdapter(adapter);
             }
-        }, 3000);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                ArrayList<HistoryProduct> arraylist = listElements.get(i).getProducts();
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("arraylist", arraylist);
-//                activity.shoppingHistoryDetailsFragment.setArguments(bundle);
-//                activity.navigateTo(activity.shoppingHistoryDetailsFragment);
-//            }
-//        });
+        }, 1500);
+
+        btnBuyCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Sale data = new Sale(Integer.parseInt(localStorage.getString(getString(R.string.id_user), "")), product_ids);
+                Call<Integer> call = ApiAdapter.getApiService().sale(data);
+                call.enqueue(new Callback<Integer>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        localStorageEditor.putString(getString(R.string.cart), "");
+                        activity.navigateTo(activity.mainFragments.get(0));
+                    }
+
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        float totalPrice = 0;
+        for (int i = 0; i < listElements.size(); i++) {
+            totalPrice += Float.parseFloat(listElements.get(i).getPrice());
+        }
+        final DecimalFormat df = new DecimalFormat("0.00");
+        tvTotalPrice.setText("Importe total: " + df.format(totalPrice) + "€");
     }
 
     @Override

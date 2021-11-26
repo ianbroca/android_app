@@ -21,6 +21,7 @@ import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.model.HistoryProduct;
 import com.example.almishop.model.HistoryTransaction;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -88,7 +89,8 @@ public class ShoppingHistoryDetailsFragment extends DialogFragment {
         for (int i = 0; i < listElements.size(); i++) {
             totalPrice += Float.parseFloat(listElements.get(i).getPrice());
         }
-        tvTotalPrice.setText("Importe total: " + totalPrice + "€");
+        final DecimalFormat df = new DecimalFormat("0.00");
+        tvTotalPrice.setText("Importe total: " + df.format(totalPrice) + "€");
     }
 
     @Override
