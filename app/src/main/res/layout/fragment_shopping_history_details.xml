@@ -8,18 +8,19 @@
     android:orientation="vertical">
 
     <ListView
-        android:id="@+id/HistoryListView"
+        android:id="@+id/HistoryDetailsListView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1px"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvShoppingHistoryTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice" />
 
     <ImageView
-        android:id="@+id/btnCloseHistory"
+        android:id="@+id/btnCloseHistoryDetails"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
@@ -29,17 +30,27 @@
         app:srcCompat="@drawable/ic_arrow_back_outline" />
 
     <TextView
-        android:id="@+id/tvShoppingHistoryTitle"
+        android:id="@+id/tvShoppingHistoryDetailsTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp"
-        android:text="Historial de compras"
+        android:text="Información del pedido"
         android:textAlignment="viewStart"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnCloseHistory"
+        app:layout_constraintStart_toEndOf="@+id/btnCloseHistoryDetails"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvShoppingHistoryDetailsTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
