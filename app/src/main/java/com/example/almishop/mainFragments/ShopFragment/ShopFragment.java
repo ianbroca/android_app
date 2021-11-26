@@ -48,7 +48,7 @@ public class ShopFragment extends Fragment
     private TabLayout tabs = null;
     private Context context;
 //    private FloatingActionButton btnCart;
-    private Button btnCart;
+    private FloatingActionButton btnCart;
 
 
 
@@ -82,7 +82,7 @@ public class ShopFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         MainActivity activity = (MainActivity) getActivity();
-        btnCart = view.findViewById(R.id.buttonborrarluego);
+        btnCart = view.findViewById(R.id.btnCart);
 
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
