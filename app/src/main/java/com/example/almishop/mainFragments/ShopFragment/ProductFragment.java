@@ -133,8 +133,8 @@ public class ProductFragment extends Fragment
             public void onClick(View v)
             {
                 Toast.makeText(context, "Se ha añadido el producto al cesta", Toast.LENGTH_SHORT).show();
-                String nextCart = localStorage.getString(getString(R.string.cart), "")+ "/" + id + "," + id_product_type;
-                localStorageEditor.putString(getString(R.string.cart), nextCart);
+                String nextCart = localStorage.getString(getString(R.string.cart), "");
+                localStorageEditor.putString(getString(R.string.cart), nextCart).commit();
                 activity.navigateTo(activity.mainFragments.get(0));
 
 //                if (smartphone != null)

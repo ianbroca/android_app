@@ -3,12 +3,14 @@ package com.example.almishop.mainFragments.ShopFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,8 +18,16 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
+import com.example.almishop.io.ApiAdapter;
+import com.example.almishop.mainFragments.ShopFragment.adapters.RecyclerViewAdapter;
+import com.example.almishop.mainFragments.ShopFragment.adapters.ShoppingCartAdapter;
+import com.example.almishop.model.Console;
 import com.example.almishop.model.HistoryProduct;
 import com.example.almishop.model.Product;
+import com.example.almishop.model.Smartphone;
+import com.example.almishop.model.Tablet;
+import com.example.almishop.model.User;
+import com.example.almishop.model.Videogame;
 
 import java.util.ArrayList;
 
@@ -76,11 +86,89 @@ public class ShoppingCartFragment extends DialogFragment {
         });
 
         String cart = localStorage.getString(getString(R.string.cart), "");
+        cart = cart.replaceFirst("/", "");
+        ArrayList<String> product_ids, product_types;
+        product_ids = new ArrayList<>();
+        product_types = new ArrayList<>();
         String[] cart_1 = cart.split("/");
         for (int i = 0; i < cart_1.length; i++) {
-            Log.d("TAG", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: " + cart_1[i]);
+            String[] cart_2 = cart_1[i].split(",");
+            product_ids.add(cart_2[0]);
+            product_types.add(cart_2[1]);
         }
+        ArrayList<Product> listElements = new ArrayList<>();
+        for (int i = 0; i < product_ids.size(); i++) {
+            final Product[] product = new Product[1];
+            Log.d("TAG", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + product_ids.get(i));
+            switch (product_types.get(i))
+            {
+                case "1": // Smartphone
+                    Call<Smartphone> callSmartphone = ApiAdapter.getApiService().getSmartphoneById(product_ids.get(i));
+                    callSmartphone.enqueue(new Callback<Smartphone>() {
+                        @Override
+                        public void onResponse(Call<Smartphone> call, Response<Smartphone> response) {
+                            listElements.add(response.body());
+                        }
 
+                        @Override
+                        public void onFailure(Call<Smartphone> call, Throwable t) {
+
+                        }
+                    });
+                    break;
+                case "2": // Tablet
+                    Call<Tablet> callTablet = ApiAdapter.getApiService().getTabletsById(product_ids.get(i));
+                    callTablet.enqueue(new Callback<Tablet>() {
+                        @Override
+                        public void onResponse(Call<Tablet> call, Response<Tablet> response) {
+                            listElements.add(response.body());
+                        }
+
+                        @Override
+                        public void onFailure(Call<Tablet> call, Throwable t) {
+
+                        }
+                    });
+                    break;
+                case "3": // Videogame
+                    Call<Videogame> callVideogame = ApiAdapter.getApiService().getVideogamesById(product_ids.get(i));
+                    callVideogame.enqueue(new Callback<Videogame>() {
+                        @Override
+                        public void onResponse(Call<Videogame> call, Response<Videogame> response) {
+                            listElements.add(response.body());
+                        }
+
+                        @Override
+                        public void onFailure(Call<Videogame> call, Throwable t) {
+
+                        }
+                    });
+                    break;
+                case "4": // Console
+                    Call<Console> callConsole = ApiAdapter.getApiService().getConsolesById(product_ids.get(i));
+                    callConsole.enqueue(new Callback<Console>() {
+                        @Override
+                        public void onResponse(Call<Console> call, Response<Console> response) {
+                            listElements.add(response.body());
+                        }
+
+                        @Override
+                        public void onFailure(Call<Console> call, Throwable t) {
+
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                ShoppingCartAdapter adapter = new ShoppingCartAdapter(context, 0, listElements);
+                listView.setAdapter(adapter);
+            }
+        }, 3000);
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

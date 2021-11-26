@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +47,8 @@ public class ShopFragment extends Fragment
 
     private TabLayout tabs = null;
     private Context context;
-    private FloatingActionButton btnCart;
+//    private FloatingActionButton btnCart;
+    private Button btnCart;
 
 
 
@@ -80,7 +82,7 @@ public class ShopFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
         MainActivity activity = (MainActivity) getActivity();
-        btnCart = view.findViewById(R.id.btnCart);
+        btnCart = view.findViewById(R.id.buttonborrarluego);
 
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
