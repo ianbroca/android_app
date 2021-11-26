@@ -67,10 +67,8 @@ public class ShoppingHistoryDetailsFragment extends DialogFragment {
         activity = (MainActivity) getActivity();
 
         btnCloseHistory = view.findViewById(R.id.btnCloseHistoryDetails);
-        tvTitle = view.findViewById(R.id.tvShoppingHistoryDetailsTitle);
+        tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
         listView = view.findViewById(R.id.HistoryDetailsListView);
-
-        tvTitle.setText("Información del pedido");
 
         btnCloseHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +83,12 @@ public class ShoppingHistoryDetailsFragment extends DialogFragment {
         listElements = (ArrayList<HistoryProduct>) getArguments().getSerializable("arraylist");
         HistoryListDetailsAdapter adapter = new HistoryListDetailsAdapter(context, listElements);
         listView.setAdapter(adapter);
+
+        float totalPrice = 0;
+        for (int i = 0; i < listElements.size(); i++) {
+            totalPrice += Float.parseFloat(listElements.get(i).getPrice());
+        }
+        tvTotalPrice.setText("Importe total: " + totalPrice + "€");
     }
 
     @Override
