@@ -61,7 +61,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:backgroundTint="@color/primary"
-                android:text="Register" />
+                android:text="Enviar" />
 
         </LinearLayout>
 

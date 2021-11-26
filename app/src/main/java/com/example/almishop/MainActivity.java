@@ -21,6 +21,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.example.almishop.io.ApiAdapter;
 import com.example.almishop.mainFragments.AboutUsFragment;
+import com.example.almishop.mainFragments.ProfileFragment.ShoppingHistoryDetailsFragment;
 import com.example.almishop.mainFragments.ProfileFragment.ShoppingHistoryFragment;
 import com.example.almishop.mainFragments.ShopFragment.BackHomeFragment;
 import com.example.almishop.mainFragments.GalleryFragment;
@@ -59,7 +60,11 @@ public class MainActivity extends AppCompatActivity {
     public ProductFragment productFragment;
     public BackHomeFragment backHomeFragment;
     public ShoppingHistoryFragment shoppingHistoryFragment;
+
     public ShopFragment shopFragment;
+
+    public ShoppingHistoryDetailsFragment shoppingHistoryDetailsFragment;
+
     int selectedIndex = 0;
 
     private static String TAG = "MAIN ACTIVITY";
@@ -102,7 +107,11 @@ public class MainActivity extends AppCompatActivity {
         backHomeFragment = new BackHomeFragment();
         productFragment = new ProductFragment();
         shoppingHistoryFragment = new ShoppingHistoryFragment();
+
         shopFragment = new ShopFragment();
+
+        shoppingHistoryDetailsFragment = new ShoppingHistoryDetailsFragment();
+
 
         searchBar = findViewById(R.id.fragmentSearchBarView);
         content = findViewById(R.id.fragmentContainerView);
@@ -124,9 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .add(R.id.fragmentContainerView, mainFragments.get(selectedIndex))
                 .commit();
-
-
-
 
         menu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

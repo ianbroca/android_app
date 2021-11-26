@@ -3,29 +3,23 @@ package com.example.almishop.mainFragments.ProfileFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.almishop.ListAdapter;
 import com.example.almishop.MainActivity;
 import com.example.almishop.R;
 import com.example.almishop.io.ApiAdapter;
-import com.example.almishop.model.ChangePassword;
 import com.example.almishop.model.HistoryProduct;
 import com.example.almishop.model.HistoryTransaction;
-import com.example.almishop.model.Login;
-import com.example.almishop.model.User;
 
 import java.util.ArrayList;
 
@@ -33,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShoppingHistoryFragment extends DialogFragment {
+public class ShoppingHistoryDetailsFragment extends DialogFragment {
 
     private static String TAG = "PASSWORD CHANGE DIALOG";
     private SharedPreferences localStorage;
@@ -42,11 +36,11 @@ public class ShoppingHistoryFragment extends DialogFragment {
     private Context context;
 
     private ImageView btnCloseHistory;
-
+    private TextView tvTitle, tvTotalPrice;
     private ListView listView;
-    private ArrayList<HistoryTransaction> listElements;
+    private ArrayList<HistoryProduct> listElements;
 
-    public ShoppingHistoryFragment() { super(); }
+    public ShoppingHistoryDetailsFragment() { super(); }
 
     @Override
     public void onAttach(Context context) {
@@ -62,7 +56,7 @@ public class ShoppingHistoryFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_shopping_history, null);
+        return inflater.inflate(R.layout.fragment_shopping_history_details, null);
     }
 
     @Override
@@ -72,48 +66,33 @@ public class ShoppingHistoryFragment extends DialogFragment {
         localStorageEditor = localStorage.edit();
         activity = (MainActivity) getActivity();
 
-        btnCloseHistory = view.findViewById(R.id.btnCloseHistory);
-        listView = view.findViewById(R.id.HistoryListView);
+        btnCloseHistory = view.findViewById(R.id.btnCloseHistoryDetails);
+        tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
+        listView = view.findViewById(R.id.HistoryDetailsListView);
 
         btnCloseHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.navigateTo(activity.mainFragments.get(0));
+                activity.navigateTo(activity.shoppingHistoryFragment);
             }
         });
 
-        listElements = new ArrayList<HistoryTransaction>();
+        listElements = new ArrayList<HistoryProduct>();
         String id = localStorage.getString(getString(R.string.id_user), "");
         Call<ArrayList<HistoryTransaction>> call = ApiAdapter.getApiService().getShoppingHistory(id);
-        call.enqueue(new Callback<ArrayList<HistoryTransaction>>() {
-            @Override
-            public void onResponse(Call<ArrayList<HistoryTransaction>> call, Response<ArrayList<HistoryTransaction>> response) {
-                listElements = response.body();
-                HistoryListAdapter adapter = new HistoryListAdapter(context, listElements);
-                listView.setAdapter(adapter);
-            }
+        listElements = (ArrayList<HistoryProduct>) getArguments().getSerializable("arraylist");
+        HistoryListDetailsAdapter adapter = new HistoryListDetailsAdapter(context, listElements);
+        listView.setAdapter(adapter);
 
-            @Override
-            public void onFailure(Call<ArrayList<HistoryTransaction>> call, Throwable t) {
-
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ArrayList<HistoryProduct> arraylist = listElements.get(i).getProducts();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("arraylist", arraylist);
-                activity.shoppingHistoryDetailsFragment.setArguments(bundle);
-                activity.navigateTo(activity.shoppingHistoryDetailsFragment);
-            }
-        });
+        float totalPrice = 0;
+        for (int i = 0; i < listElements.size(); i++) {
+            totalPrice += Float.parseFloat(listElements.get(i).getPrice());
+        }
+        tvTotalPrice.setText("Importe total: " + totalPrice + "€");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
     }
-
 }
